@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "dev:host": "vite dev --host",
     "build": "vite build && tsc --noEmit",
     "start": "node .output/server/index.mjs",
     "typecheck": "tsc --noEmit"

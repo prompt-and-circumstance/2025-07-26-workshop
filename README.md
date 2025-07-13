@@ -14,7 +14,7 @@ Then, from your terminal:
 
 ```sh
 pnpm install
-pnpm dev
+pnpm dev:host
 ```
 
 This starts your app in development mode, rebuilding assets on file changes.
