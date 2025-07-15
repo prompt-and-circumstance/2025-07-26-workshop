@@ -1,10 +1,11 @@
 import { tool } from "ai";
 import { z } from "zod";
+import { TOOL_DESCRIPTIONS } from "../prompts";
 
 export const webSearchTool = tool({
-  description: "Search the web for current information",
+  description: TOOL_DESCRIPTIONS.webSearch.description,
   parameters: z.object({
-    query: z.string().describe("Search query"),
+    query: z.string().describe(TOOL_DESCRIPTIONS.webSearch.queryHint),
     maxResults: z.number().optional().default(5).describe("Maximum number of results to return"),
   }),
   execute: async ({ query, maxResults }) => {

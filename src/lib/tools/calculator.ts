@@ -1,16 +1,13 @@
 import { tool } from "ai";
 import { z } from "zod";
+import { TOOL_DESCRIPTIONS } from "../prompts";
 
 export const calculatorTool = tool({
-  description:
-    // WARNING: Arbitrary JavaScript is allowed for educational purposes in a controlled Replit environment.
-    "Evaluate JavaScript arithmetic expressions, including Math functions.",
+  description: TOOL_DESCRIPTIONS.calculator.description,
   parameters: z.object({
     expression: z
       .string()
-      .describe(
-        "JavaScript arithmetic expression using numbers, operators (+, -, *, /, **), parentheses, and Math functions (e.g., Math.sin, Math.sqrt, Math.log). Examples: '(1500 * Math.pow(1.08,10)) - 1500', 'Math.sqrt(16) + 5', 'Math.sin(Math.PI/2)'. WARNING: Arbitrary JavaScript is allowed. Do not use in production."
-      ),
+      .describe(TOOL_DESCRIPTIONS.calculator.expressionHint),
   }),
   execute: async ({ expression }) => {
     try {

@@ -1,6 +1,5 @@
 import { calculatorTool } from "./calculator";
 import { webSearchTool } from "./web-search";
-import type { ToolName } from "./types";
 
 export const TOOL_REGISTRY = {
   calculator: calculatorTool,
@@ -10,6 +9,8 @@ export const TOOL_REGISTRY = {
   "code-executor": null, // Placeholder
   "file-reader": null, // Placeholder
 } as const;
+
+export type ToolName = keyof typeof TOOL_REGISTRY;
 
 export function getWorkshopTools(toolNames: ToolName[]) {
   const tools: Record<string, any> = {};
@@ -53,11 +54,3 @@ export function getReasoningTools() {
 
   return tools;
 }
-
-// Export individual tools for direct use
-export { calculatorTool } from "./calculator";
-export { webSearchTool } from "./web-search";
-
-// Export types
-export type { ToolName, ToolCategory, ToolConfig } from "./types";
-export { getToolConfig, getToolsByCategory, getAllToolNames } from "./types";

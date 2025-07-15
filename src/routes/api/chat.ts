@@ -1,9 +1,8 @@
 import { createServerFileRoute } from "@tanstack/react-start/server";
-import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { getDemoConfig } from "@/lib/demos/configs";
 import { getWorkshopTools } from "@/lib/tools";
-import { getModelConfig } from "@/lib/models/types";
+import { getModel } from "@/lib/models";
 
 export const ServerRoute = createServerFileRoute("/api/chat").methods({
   POST: async ({ request }) => {
@@ -14,20 +13,20 @@ export const ServerRoute = createServerFileRoute("/api/chat").methods({
       return new Response(`Demo '${demoId}' not found`, { status: 404 });
     }
 
-    const modelConfig = getModelConfig(config.model);
     const workshopTools = getWorkshopTools(config.tools);
+    const model = getModel(config.model);
 
     // Only use backend-configured tools - no frontend tools needed for this workshop
     const tools = workshopTools;
 
     const result = streamText({
-      model: openai(modelConfig.model),
+      model,
       messages,
       system: config.systemPrompt,
       tools,
       toolCallStreaming: true,
-      maxTokens: config.maxTokens || modelConfig.maxTokens,
-      temperature: config.temperature || modelConfig.temperature,
+      maxTokens: config.maxTokens || 2048,
+      temperature: config.temperature || 0.7,
       onError: console.log,
     });
 
