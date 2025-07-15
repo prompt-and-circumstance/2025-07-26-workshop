@@ -29,9 +29,7 @@ export function DemoCard({ title, description, href }: DemoCardProps) {
         <CardContent>
           <div className="flex justify-center">
             <Link to={href}>
-              <Button className="terminal-text">
-                Explore Demo
-              </Button>
+              <Button className="terminal-text">Explore Demo</Button>
             </Link>
           </div>
         </CardContent>
