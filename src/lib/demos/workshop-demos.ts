@@ -6,7 +6,7 @@ export const WORKSHOP_DEMOS: WorkshopDemo[] = [
     category: "Mathematical Reasoning",
     name: "LLMs and Math",
     description:
-      "Discover the difference between raw LLM capabilities and tool-enhanced AI performance. See how adding simple tools can dramatically improve accuracy and reliability.",
+      "Discover the difference between raw LLM capabilities and tool-enhanced AI performance.",
     variants: {
       basic: {
         title: "Carrie 1A",

@@ -1,11 +1,11 @@
-import { createServerFileRoute } from '@tanstack/react-start/server'
+import { createServerFileRoute } from "@tanstack/react-start/server";
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
-import { getDemoConfig } from "@/lib/demos";
+import { getDemoConfig } from "@/lib/demos/configs";
 import { getWorkshopTools } from "@/lib/tools";
 import { getModelConfig } from "@/lib/models/types";
 
-export const ServerRoute = createServerFileRoute('/api/chat').methods({
+export const ServerRoute = createServerFileRoute("/api/chat").methods({
   POST: async ({ request }) => {
     const { messages, demoId } = await request.json();
 
@@ -33,4 +33,4 @@ export const ServerRoute = createServerFileRoute('/api/chat').methods({
 
     return result.toDataStreamResponse();
   },
-})
+});

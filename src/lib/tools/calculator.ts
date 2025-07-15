@@ -3,7 +3,8 @@ import { z } from "zod";
 
 export const calculatorTool = tool({
   description:
-    "Evaluate JavaScript arithmetic expressions, including Math functions. For course use only. WARNING: Arbitrary JavaScript is allowed for educational purposes in a controlled Replit environment.",
+    // WARNING: Arbitrary JavaScript is allowed for educational purposes in a controlled Replit environment.
+    "Evaluate JavaScript arithmetic expressions, including Math functions.",
   parameters: z.object({
     expression: z
       .string()
@@ -33,7 +34,7 @@ export const calculatorTool = tool({
       return {
         expression: expression,
         error:
-          "Unable to calculate this expression. Please use valid JavaScript arithmetic, including Math functions. (WARNING: This tool allows arbitrary JavaScript for educational use only.)",
+          "Unable to calculate this expression. Please use valid JavaScript arithmetic, including Math functions.",
       };
     }
   },

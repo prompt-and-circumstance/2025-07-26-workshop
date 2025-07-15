@@ -12,9 +12,7 @@ export function Header() {
                 Prompt & Circumstance
               </h1>
             </Link>
-            <p className="text-sm text-muted-foreground mt-1">
-              A Hands-On AI Workshop
-            </p>
+            <p className="text-sm font-bold mt-1">A Hands-On AI Workshop</p>
           </div>
           <DateDisplay />
         </div>
