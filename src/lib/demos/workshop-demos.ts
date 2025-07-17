@@ -1,9 +1,26 @@
 import type { WorkshopDemo } from "./types";
 
-export const WORKSHOP_DEMOS: WorkshopDemo[] = [
+const WORKSHOP_DEMOS: WorkshopDemo[] = [
+  {
+    id: "tokenizers",
+    name: "Tokenizers",
+    description:
+      "Explore how AI models break down text into tokens and understand the implications.",
+    variants: {
+      basic: {
+        title: "Basic Tokenization",
+        description: "Interactive tokenizer showing how text becomes tokens",
+        demoId: "tokenizers-basic",
+      },
+      enhanced: {
+        title: "Model Comparison",
+        description: "Compare tokenization across different model vocabularies",
+        demoId: "tokenizers-comparison",
+      },
+    },
+  },
   {
     id: "math",
-    category: "Mathematical Reasoning",
     name: "LLMs and Math",
     description:
       "Discover the difference between raw LLM capabilities and tool-enhanced AI performance.",
@@ -22,14 +39,6 @@ export const WORKSHOP_DEMOS: WorkshopDemo[] = [
   },
 ];
 
-export function getWorkshopDemo(id: string): WorkshopDemo | null {
-  return WORKSHOP_DEMOS.find((demo) => demo.id === id) || null;
-}
-
 export function getAllWorkshopDemos(): WorkshopDemo[] {
   return WORKSHOP_DEMOS;
-}
-
-export function getWorkshopDemosByCategory(category: string): WorkshopDemo[] {
-  return WORKSHOP_DEMOS.filter((demo) => demo.category === category);
 }

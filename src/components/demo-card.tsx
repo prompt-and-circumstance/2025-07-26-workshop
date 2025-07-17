@@ -17,7 +17,7 @@ export interface DemoCardProps {
 export function DemoCard({ title, description, href }: DemoCardProps) {
   return (
     <div className="flex justify-center mb-12">
-      <Card className="border-border bg-card hover:border-primary/50 transition-colors max-w-md w-full">
+      <Card className="border-border bg-card hover:border-primary/50 transition-colors max-w-lg w-full">
         <CardHeader>
           <CardTitle className="terminal-text bloomberg-orange text-xl text-center">
             {title}

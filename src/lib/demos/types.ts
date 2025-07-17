@@ -28,7 +28,6 @@ export interface DemoVariant {
 
 export interface WorkshopDemo {
   id: string;
-  category: string;
   name: string;
   description: string;
   variants: DemoVariant;

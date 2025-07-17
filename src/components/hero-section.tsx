@@ -7,12 +7,12 @@ export function HeroSection() {
         </span>
       </h2>
       <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-left">
-        In this workshop, you will chat with different versions of Carrie, an AI
-        chatbot, to learn about LLMs and AI agents.
+        In this workshop, you will interact with various demos to learn about
+        LLMs and AI agents.
       </p>
       <br />
       <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-left">
-        But more than just chatting, you will run the code and get hands-on
+        But more than just chatting, you will see the code and get hands-on
         appreciation for how tweaking different prompts and configurations
         result in different outputs.
       </p>
