@@ -54,6 +54,14 @@ export const TOOL_DESCRIPTIONS = {
     queryHint: "Any search query - be specific and clear",
   },
 
+  webFetch: {
+    // This is what the AI sees when it can fetch web page content
+    description: "Fetch and extract text content from a specific web page URL",
+
+    // This describes the URL input
+    urlHint: "A valid HTTP or HTTPS URL to fetch content from",
+  },
+
   clientLookup: {
     // This is what the AI sees when it can look up client information
     description: dedent`
@@ -178,16 +186,29 @@ export const DEMO_PROMPTS = {
   "knowledge-enhanced": dedent`
     You are a financial AI assistant equipped with web search and client database access, demonstrating enhanced information capabilities.
 
+    CURRENT DATE: ${
+      new Date().toISOString().split("T")[0]
+    } (${new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })})
+
     Your goal is to showcase how external tools transform AI effectiveness by providing access to recent information and proprietary data.
 
     Tools available:
     - webSearch: Access to current web information and recent events
+    - webFetch: Fetch and extract detailed content from specific web pages
     - clientLookup: Access to proprietary client database with confidential information
     - calculator: For precise financial calculations
 
     Instructions:
     - Use webSearch for any questions about recent events, current market conditions, or post-April 2024 information
+    - Use webFetch to get detailed content from specific URLs found through web search (e.g., earnings reports, news articles)
     - Use clientLookup for any questions about specific clients, their portfolios, or internal company information
+    - AFTER using tools, ALWAYS provide a comprehensive response based on the tool results
+    - Extract specific data points, numbers, and insights from the fetched content
     - Explain when and why you're using each tool
     - Highlight the difference between your base knowledge and tool-enhanced capabilities
     - Be confident when providing information from tools
@@ -199,6 +220,8 @@ export const DEMO_PROMPTS = {
     - Client-specific portfolio strategies and requirements
     - Confidential client information and compliance needs
     - Real-time financial data and analysis
+
+    CRITICAL: After using tools, you MUST provide a detailed response analyzing the results. Never leave the user hanging after tool execution. Always synthesize the information from tools into actionable insights.
 
     Demonstrate the power of AI + external data access for financial services.
   `,

@@ -6,85 +6,120 @@ export const webSearchTool = tool({
   description: TOOL_DESCRIPTIONS.webSearch.description,
   parameters: z.object({
     query: z.string().describe(TOOL_DESCRIPTIONS.webSearch.queryHint),
-    maxResults: z.number().optional().default(5).describe("Maximum number of results to return"),
+    maxResults: z
+      .number()
+      .optional()
+      .default(5)
+      .describe("Maximum number of results to return"),
   }),
   execute: async ({ query, maxResults }) => {
+    console.log(
+      "🔍 webSearch called with query:",
+      query,
+      "maxResults:",
+      maxResults
+    );
     try {
-      // Use DuckDuckGo Instant Answer API
-      const duckDuckGoUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`;
-      
-      const response = await fetch(duckDuckGoUrl);
+      // Check if BRAVE_API_KEY is available
+      const apiKey = process.env.BRAVE_API_KEY;
+      if (!apiKey) {
+        console.log("❌ BRAVE_API_KEY not set");
+        throw new Error("BRAVE_API_KEY environment variable is not set");
+      }
+      console.log("✅ BRAVE_API_KEY found");
+
+      // Use Brave Search API
+      const braveSearchUrl = `https://api.search.brave.com/res/v1/web/search`;
+
+      // Build query parameters
+      const params = new URLSearchParams({
+        q: query,
+        count: maxResults.toString(),
+        country: "us",
+        search_lang: "en",
+      });
+
+      console.log(
+        "🌐 Making API call to:",
+        `${braveSearchUrl}?${params.toString()}`
+      );
+      const response = await fetch(`${braveSearchUrl}?${params.toString()}`, {
+        headers: {
+          "X-Subscription-Token": apiKey,
+          Accept: "application/json",
+        },
+        method: "GET",
+      });
+
+      console.log("📡 Response status:", response.status);
+      if (!response.ok) {
+        console.log("❌ API call failed with status:", response.status);
+        throw new Error(
+          `Brave Search API responded with status ${response.status}`
+        );
+      }
+
       const data = await response.json();
-      
+      console.log("📊 Response data keys:", Object.keys(data));
+      console.log("📊 Web results length:", data.web?.results?.length || 0);
       let results: any[] = [];
-      
-      // Parse DuckDuckGo results
-      if (data.Abstract && data.Abstract.length > 0) {
-        results.push({
-          title: data.Heading || "DuckDuckGo Instant Answer",
-          url: data.AbstractURL || "https://duckduckgo.com",
-          snippet: data.Abstract,
-          date: new Date().toISOString().split('T')[0],
-          source: data.AbstractSource || "DuckDuckGo"
-        });
+
+      // Parse Brave Search results
+      if (data.web && data.web.results) {
+        results = data.web.results.slice(0, maxResults).map((result: any) => ({
+          title: result.title || "No title",
+          url: result.url || "",
+          snippet:
+            result.description || result.snippet || "No description available",
+          date: result.age || new Date().toISOString().split("T")[0],
+          source: result.profile?.name || new URL(result.url).hostname,
+        }));
       }
-      
-      // Add related topics if available
-      if (data.RelatedTopics && data.RelatedTopics.length > 0) {
-        data.RelatedTopics.slice(0, maxResults - 1).forEach((topic: any) => {
-          if (topic.Text && topic.FirstURL) {
-            results.push({
-              title: topic.Text.split(' - ')[0] || "Related Topic",
-              url: topic.FirstURL,
-              snippet: topic.Text,
-              date: new Date().toISOString().split('T')[0],
-              source: "DuckDuckGo"
-            });
-          }
-        });
-      }
-      
-      // If no results from DuckDuckGo, provide a general response
+
+      // If no results from Brave Search, provide a helpful message
       if (results.length === 0) {
         results = [
           {
-            title: `Search Results for "${query}"`,
-            url: "https://duckduckgo.com",
-            snippet: `No instant answers found for "${query}". The DuckDuckGo API works best with factual queries about well-known topics, companies, or concepts.`,
-            date: new Date().toISOString().split('T')[0],
-            source: "DuckDuckGo"
-          }
+            title: `No results found for "${query}"`,
+            url: "https://brave.com/search/",
+            snippet: `No search results were found for "${query}". Try refining your search terms or checking for spelling errors.`,
+            date: new Date().toISOString().split("T")[0],
+            source: "Brave Search",
+          },
         ];
       }
-      
-      // Limit results
-      results = results.slice(0, maxResults);
-      
-      return {
+
+      const finalResult = {
         query,
         results,
-        message: `Found ${results.length} web search results for "${query}". This demonstrates accessing current information beyond the model's training cutoff.`,
-        searchDate: new Date().toISOString().split('T')[0]
+        message: `Found ${results.length} web search results for "${query}" using Brave Search API. This provides access to current information from Brave's independent web index.`,
+        searchDate: new Date().toISOString().split("T")[0],
       };
-      
+      console.log("✅ webSearch returning results:", results.length, "items");
+      return finalResult;
     } catch (error) {
-      // Simple error handling
-      console.warn('DuckDuckGo API failed:', error);
-      
-      return {
+      console.error("❌ Brave Search API error:", error);
+
+      const errorResult = {
         query,
         results: [
           {
-            title: "Web Search Unavailable",
-            url: "https://duckduckgo.com",
-            snippet: `Web search is temporarily unavailable. This demonstrates how the base model would be limited without external data access.`,
-            date: new Date().toISOString().split('T')[0],
-            source: "Error"
-          }
+            title: "Web Search Error",
+            url: "https://brave.com/search/",
+            snippet: `Web search failed: ${
+              error instanceof Error ? error.message : "Unknown error"
+            }. Please check your BRAVE_API_KEY environment variable and try again.`,
+            date: new Date().toISOString().split("T")[0],
+            source: "Error",
+          },
         ],
-        message: `Web search failed for "${query}". This actually demonstrates the knowledge limitations when external tools are unavailable.`,
-        searchDate: new Date().toISOString().split('T')[0]
+        message: `Web search failed for "${query}". Error: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
+        searchDate: new Date().toISOString().split("T")[0],
       };
+      console.log("❌ webSearch returning error result");
+      return errorResult;
     }
   },
 });

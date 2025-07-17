@@ -1,12 +1,24 @@
 import { calculatorTool } from "./calculator";
 import { webSearchTool } from "./web-search";
 import { clientLookupTool } from "./client-lookup";
-import { viewPortfolioTool, getClientNotesTool, listTasksTool } from "./portfolio-read";
-import { addInvestmentTool, addClientNoteTool, updateClientNoteTool, createTaskTool, completeTaskTool } from "./portfolio-write";
+import {
+  viewPortfolioTool,
+  getClientNotesTool,
+  listTasksTool,
+} from "./portfolio-read";
+import {
+  addInvestmentTool,
+  addClientNoteTool,
+  updateClientNoteTool,
+  createTaskTool,
+  completeTaskTool,
+} from "./portfolio-write";
+import { webFetchTool } from "./web-fetch";
 
 export const TOOL_REGISTRY = {
   calculator: calculatorTool,
   "web-search": webSearchTool,
+  "web-fetch": webFetchTool,
   "client-lookup": clientLookupTool,
   "view-portfolio": viewPortfolioTool,
   "get-client-notes": getClientNotesTool,
