@@ -30,6 +30,34 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
       "Calculate: (1,500 × 1.08^10) - 1,500",
     ],
   },
+  "knowledge-basic": {
+    id: "knowledge-basic",
+    name: "Demo 2A: Base Model Knowledge Limits",
+    category: "Knowledge and Knowledge",
+    systemPrompt: DEMO_PROMPTS["knowledge-basic"],
+    tools: [],
+    model: "gpt-4o",
+    suggestions: [
+      "What's the current Bitcoin price?",
+      "How did TSMC's latest earnings report perform?",
+      "What are Tesla's Q4 2024 delivery numbers?",
+      "Can you provide information about our client ACME Corp?",
+    ],
+  },
+  "knowledge-enhanced": {
+    id: "knowledge-enhanced",
+    name: "Demo 2B: Tool-Enhanced Information Access",
+    category: "Knowledge and Knowledge",
+    systemPrompt: DEMO_PROMPTS["knowledge-enhanced"],
+    tools: ["web-search", "client-lookup"],
+    model: "gpt-4o",
+    suggestions: [
+      "What's the current Bitcoin price?",
+      "How did TSMC's latest earnings report perform?",
+      "What are Tesla's Q4 2024 delivery numbers?",
+      "Can you provide information about our client ACME Corp?",
+    ],
+  },
 };
 
 export function getDemoConfig(demoId: string): DemoConfig | null {

@@ -70,17 +70,15 @@ function DemoMath() {
             variant={!isToolsEnabled ? "default" : "ghost"}
             size="sm"
             onClick={() => setIsToolsEnabled(false)}
-            className="terminal-text"
           >
-            Carrie 1A (Basic)
+            Base Model
           </Button>
           <Button
             variant={isToolsEnabled ? "default" : "ghost"}
             size="sm"
             onClick={() => setIsToolsEnabled(true)}
-            className="terminal-text"
           >
-            Carrie 1B (Tools)
+            Tool-Enhanced
           </Button>
         </div>
       </div>
@@ -88,7 +86,7 @@ function DemoMath() {
       <AssistantRuntimeProvider runtime={runtimeBasic}>
         <div style={{ display: !isToolsEnabled ? 'block' : 'none' }}>
           <WorkshopThread
-            title="Carrie 1A: Raw LLM Math Capabilities"
+            title="Base Model: Raw LLM Math Capabilities"
             description="Raw LLM mathematical abilities without external tools."
             suggestions={suggestions}
           />
@@ -98,7 +96,7 @@ function DemoMath() {
       <AssistantRuntimeProvider runtime={runtimeEnhanced}>
         <div style={{ display: isToolsEnabled ? 'block' : 'none' }}>
           <WorkshopThread
-            title="Carrie 1B: LLM with Calculator Tools"
+            title="Tool-Enhanced: LLM with Calculator"
             description="Enhanced with precise calculation tools. Experience the difference!"
             suggestions={suggestions}
           />

@@ -13,6 +13,7 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as DemoTokenizersRouteImport } from './routes/demo-tokenizers'
 import { Route as DemoMathRouteImport } from './routes/demo-math'
+import { Route as DemoKnowledgeRouteImport } from './routes/demo-knowledge'
 import { Route as IndexRouteImport } from './routes/index'
 import { ServerRoute as ApiChatServerRouteImport } from './routes/api/chat'
 
@@ -28,6 +29,11 @@ const DemoMathRoute = DemoMathRouteImport.update({
   path: '/demo-math',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoKnowledgeRoute = DemoKnowledgeRouteImport.update({
+  id: '/demo-knowledge',
+  path: '/demo-knowledge',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -41,30 +47,34 @@ const ApiChatServerRoute = ApiChatServerRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/demo-knowledge': typeof DemoKnowledgeRoute
   '/demo-math': typeof DemoMathRoute
   '/demo-tokenizers': typeof DemoTokenizersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/demo-knowledge': typeof DemoKnowledgeRoute
   '/demo-math': typeof DemoMathRoute
   '/demo-tokenizers': typeof DemoTokenizersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/demo-knowledge': typeof DemoKnowledgeRoute
   '/demo-math': typeof DemoMathRoute
   '/demo-tokenizers': typeof DemoTokenizersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo-math' | '/demo-tokenizers'
+  fullPaths: '/' | '/demo-knowledge' | '/demo-math' | '/demo-tokenizers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo-math' | '/demo-tokenizers'
-  id: '__root__' | '/' | '/demo-math' | '/demo-tokenizers'
+  to: '/' | '/demo-knowledge' | '/demo-math' | '/demo-tokenizers'
+  id: '__root__' | '/' | '/demo-knowledge' | '/demo-math' | '/demo-tokenizers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DemoKnowledgeRoute: typeof DemoKnowledgeRoute
   DemoMathRoute: typeof DemoMathRoute
   DemoTokenizersRoute: typeof DemoTokenizersRoute
 }
@@ -106,6 +116,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoMathRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/demo-knowledge': {
+      id: '/demo-knowledge'
+      path: '/demo-knowledge'
+      fullPath: '/demo-knowledge'
+      preLoaderRoute: typeof DemoKnowledgeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -129,6 +146,7 @@ declare module '@tanstack/react-start/server' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DemoKnowledgeRoute: DemoKnowledgeRoute,
   DemoMathRoute: DemoMathRoute,
   DemoTokenizersRoute: DemoTokenizersRoute,
 }
