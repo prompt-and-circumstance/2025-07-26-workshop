@@ -1,19 +1,54 @@
 import { useState, useMemo } from "react";
-import { encode as cl100k_encode, decode as cl100k_decode } from "gpt-tokenizer/encoding/cl100k_base";
-import { encode as p50k_encode, decode as p50k_decode } from "gpt-tokenizer/encoding/p50k_base";
-import { encode as r50k_encode, decode as r50k_decode } from "gpt-tokenizer/encoding/r50k_base";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  encode as cl100k_encode,
+  decode as cl100k_decode,
+} from "gpt-tokenizer/encoding/cl100k_base";
+import {
+  encode as o200k_encode,
+  decode as o200k_decode,
+} from "gpt-tokenizer/encoding/o200k_base";
+import {
+  encode as p50k_encode,
+  decode as p50k_decode,
+} from "gpt-tokenizer/encoding/p50k_base";
+import {
+  encode as r50k_encode,
+  decode as r50k_decode,
+} from "gpt-tokenizer/encoding/r50k_base";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { sampleTexts, sampleTextOrder, type SampleTextType } from "@/data/sample-texts";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  sampleTexts,
+  sampleTextOrder,
+  type SampleTextType,
+} from "@/data/sample-texts";
 
 const tokenizers = {
+  o200k_base: {
+    encode: o200k_encode,
+    decode: o200k_decode,
+    name: "o200k_base (GPT-4o)",
+    vocabSize: "~200,000",
+  },
   cl100k_base: {
     encode: cl100k_encode,
     decode: cl100k_decode,
-    name: "cl100k_base (GPT-4, GPT-4o)",
-    vocabSize: "~200,000",
+    name: "cl100k_base (GPT-4, GPT-3.5)",
+    vocabSize: "~100,000",
   },
   p50k_base: {
     encode: p50k_encode,
@@ -44,7 +79,24 @@ const pastelColors = [
 
 type TokenizerType = keyof typeof tokenizers;
 
-const TokenizedText = ({ tokens, tokenizer }: { tokens: number[]; tokenizer: { decode: (tokens: number[]) => string } }) => {
+const getSampleDisplayName = (key: SampleTextType): string => {
+  switch (key) {
+    case "complexEnglish":
+      return "Complex English";
+    case "scientific":
+      return "Scientific";
+    default:
+      return key.charAt(0).toUpperCase() + key.slice(1);
+  }
+};
+
+const TokenizedText = ({
+  tokens,
+  tokenizer,
+}: {
+  tokens: number[];
+  tokenizer: { decode: (tokens: number[]) => string };
+}) => {
   const decodedTokens = useMemo(() => {
     return tokens.map((token) => tokenizer.decode([token]));
   }, [tokens, tokenizer]);
@@ -68,16 +120,19 @@ const TokenizedText = ({ tokens, tokenizer }: { tokens: number[]; tokenizer: { d
 
 export function TokenizerDemo() {
   const [inputText, setInputText] = useState(sampleTexts.english);
-  const [selectedTokenizer, setSelectedTokenizer] = useState<TokenizerType>("cl100k_base");
+  const [selectedTokenizer, setSelectedTokenizer] =
+    useState<TokenizerType>("o200k_base");
   const [displayMode, setDisplayMode] = useState<"tokens" | "ids">("tokens");
 
   const tokenizer = tokenizers[selectedTokenizer];
-  const encodedTokens = useMemo(() => tokenizer.encode(inputText), [inputText, tokenizer]);
+  const encodedTokens = useMemo(
+    () => tokenizer.encode(inputText),
+    [inputText, tokenizer]
+  );
 
   const handleSampleSelect = (sample: SampleTextType) => {
     setInputText(sampleTexts[sample]);
   };
-
 
   return (
     <div className="space-y-6">
@@ -91,8 +146,15 @@ export function TokenizerDemo() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium mb-2 block">Model/Tokenizer</label>
-              <Select value={selectedTokenizer} onValueChange={(value) => setSelectedTokenizer(value as TokenizerType)}>
+              <label className="text-sm font-medium mb-2 block">
+                Model/Tokenizer
+              </label>
+              <Select
+                value={selectedTokenizer}
+                onValueChange={(value) =>
+                  setSelectedTokenizer(value as TokenizerType)
+                }
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -110,7 +172,9 @@ export function TokenizerDemo() {
             </div>
 
             <div>
-              <label className="text-sm font-medium mb-2 block">Sample Text</label>
+              <label className="text-sm font-medium mb-2 block">
+                Sample Text
+              </label>
               <div className="flex flex-wrap gap-2">
                 {sampleTextOrder.map((key) => (
                   <Button
@@ -119,7 +183,7 @@ export function TokenizerDemo() {
                     size="sm"
                     onClick={() => handleSampleSelect(key)}
                   >
-                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                    {getSampleDisplayName(key)}
                   </Button>
                 ))}
               </div>
@@ -175,7 +239,8 @@ export function TokenizerDemo() {
                     key={index}
                     className="inline-block border border-gray-300 dark:border-gray-600 rounded-sm px-2 py-1 mb-1 mr-1"
                     style={{
-                      backgroundColor: pastelColors[index % pastelColors.length],
+                      backgroundColor:
+                        pastelColors[index % pastelColors.length],
                     }}
                   >
                     {token}
@@ -187,11 +252,15 @@ export function TokenizerDemo() {
 
           <div className="grid grid-cols-3 gap-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{inputText.length}</div>
+              <div className="text-2xl font-bold text-blue-600">
+                {inputText.length}
+              </div>
               <div className="text-sm text-muted-foreground">Characters</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">{encodedTokens.length}</div>
+              <div className="text-2xl font-bold text-green-600">
+                {encodedTokens.length}
+              </div>
               <div className="text-sm text-muted-foreground">Tokens</div>
             </div>
             <div className="text-center">

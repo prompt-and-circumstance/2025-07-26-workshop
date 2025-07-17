@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { encode as cl100k_encode } from "gpt-tokenizer/encoding/cl100k_base";
+import { encode as o200k_encode } from "gpt-tokenizer/encoding/o200k_base";
 import { encode as p50k_encode } from "gpt-tokenizer/encoding/p50k_base";
 import {
   Card,
@@ -17,8 +17,8 @@ import {
 } from "@/data/sample-texts";
 
 const tokenizers = {
-  cl100k_base: {
-    encode: cl100k_encode,
+  o200k_base: {
+    encode: o200k_encode,
     name: "GPT-4o (o200k_base)",
     vocabSize: "~200,000",
     color: "bg-blue-100 dark:bg-blue-900",
@@ -32,6 +32,17 @@ const tokenizers = {
 };
 
 type ComparisonTextType = SampleTextType;
+
+const getSampleDisplayName = (key: SampleTextType): string => {
+  switch (key) {
+    case "complexEnglish":
+      return "Complex English";
+    case "scientific":
+      return "Scientific";
+    default:
+      return key.charAt(0).toUpperCase() + key.slice(1);
+  }
+};
 
 const ComparisonResult = ({
   title,
@@ -101,7 +112,7 @@ export function TokenizerComparison() {
                   size="sm"
                   onClick={() => handleSampleSelect(key)}
                 >
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
+                  {getSampleDisplayName(key)}
                 </Button>
               ))}
             </div>

@@ -3,13 +3,7 @@ import { WorkshopLayout } from "@/components/workshop-layout";
 import { getAllWorkshopDemos } from "@/lib/demos/workshop-demos";
 import { TokenizerDemo } from "@/components/tokenizer-demo";
 import { TokenizerComparison } from "@/components/tokenizer-comparison";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const Route = createFileRoute("/demo-tokenizers")({
   component: TokenizerDemoPage,
@@ -37,9 +31,6 @@ function TokenizerDemoPage() {
         <Card>
           <CardHeader>
             <CardTitle>What are Tokens?</CardTitle>
-            <CardDescription>
-              Understanding the fundamental unit of AI language processing
-            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="prose dark:prose-invert max-w-none">
