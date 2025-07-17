@@ -8,7 +8,7 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     category: "Mathematical Reasoning",
     systemPrompt: DEMO_PROMPTS["math-basic"],
     tools: [],
-    model: "gpt-4o",
+    model: "gpt-4.1",
     suggestions: [
       "Calculate compound interest: $10,000 at 7% for 15 years",
       "Find the square root of 386,154,294,354,481",
@@ -22,7 +22,7 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     category: "Mathematical Reasoning",
     systemPrompt: DEMO_PROMPTS["math-enhanced"],
     tools: ["calculator"],
-    model: "gpt-4o",
+    model: "gpt-4.1",
     suggestions: [
       "Calculate compound interest: $10,000 at 7% for 15 years",
       "Find the square root of 386,154,294,354,481",
@@ -36,7 +36,7 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     category: "Knowledge and Knowledge",
     systemPrompt: DEMO_PROMPTS["knowledge-basic"],
     tools: [],
-    model: "gpt-4o",
+    model: "gpt-4.1",
     suggestions: [
       "What's the current Bitcoin price?",
       "How did TSMC's latest earnings report perform?",
@@ -50,7 +50,7 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     category: "Knowledge and Knowledge",
     systemPrompt: DEMO_PROMPTS["knowledge-enhanced"],
     tools: ["web-search", "client-lookup"],
-    model: "gpt-4o",
+    model: "gpt-4.1",
     suggestions: [
       "What's the current Bitcoin price?",
       "How did TSMC's latest earnings report perform?",
@@ -64,7 +64,7 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     category: "Write Operations",
     systemPrompt: DEMO_PROMPTS["portfolio-read"],
     tools: ["view-portfolio", "get-client-notes", "list-tasks"],
-    model: "gpt-4o",
+    model: "gpt-4.1",
     suggestions: [
       "Show me the current portfolio",
       "Add 100 shares of GOOGL at $150",
@@ -78,8 +78,17 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     name: "Demo 3B: Full Read-Write Portfolio Management",
     category: "Write Operations",
     systemPrompt: DEMO_PROMPTS["portfolio-write"],
-    tools: ["view-portfolio", "get-client-notes", "list-tasks", "add-investment", "add-client-note", "update-client-note", "create-task", "complete-task"],
-    model: "gpt-4o",
+    tools: [
+      "view-portfolio",
+      "get-client-notes",
+      "list-tasks",
+      "add-investment",
+      "add-client-note",
+      "update-client-note",
+      "create-task",
+      "complete-task",
+    ],
+    model: "gpt-4.1",
     suggestions: [
       "Show me the current portfolio",
       "Add 100 shares of GOOGL at $150",
