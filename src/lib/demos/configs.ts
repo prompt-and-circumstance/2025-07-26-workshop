@@ -58,6 +58,36 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
       "Can you provide information about our client ACME Corp?",
     ],
   },
+  "portfolio-read": {
+    id: "portfolio-read",
+    name: "Demo 3A: Read-Only Portfolio Access",
+    category: "Write Operations",
+    systemPrompt: DEMO_PROMPTS["portfolio-read"],
+    tools: ["view-portfolio", "get-client-notes", "list-tasks"],
+    model: "gpt-4o",
+    suggestions: [
+      "Show me the current portfolio",
+      "Add 100 shares of GOOGL at $150",
+      "Create a task to review Tesla position",
+      "Add note: Client wants ESG investments",
+      "List all pending tasks",
+    ],
+  },
+  "portfolio-write": {
+    id: "portfolio-write",
+    name: "Demo 3B: Full Read-Write Portfolio Management",
+    category: "Write Operations",
+    systemPrompt: DEMO_PROMPTS["portfolio-write"],
+    tools: ["view-portfolio", "get-client-notes", "list-tasks", "add-investment", "add-client-note", "update-client-note", "create-task", "complete-task"],
+    model: "gpt-4o",
+    suggestions: [
+      "Show me the current portfolio",
+      "Add 100 shares of GOOGL at $150",
+      "Create a task to review Tesla position",
+      "Add note: Client wants ESG investments",
+      "List all pending tasks",
+    ],
+  },
 };
 
 export function getDemoConfig(demoId: string): DemoConfig | null {

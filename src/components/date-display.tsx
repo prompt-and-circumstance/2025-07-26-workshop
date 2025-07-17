@@ -26,7 +26,7 @@ export function DateDisplay() {
   }, []);
 
   return (
-    <div className="terminal-text text-sm font-extrabold bloomberg-amber">
+    <div className="terminal-text text-sm font-extrabold bloomberg-amber" suppressHydrationWarning>
       {currentDateTime}
     </div>
   );

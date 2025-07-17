@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AssistantRuntimeProvider } from "@assistant-ui/react";
 import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
@@ -7,9 +7,9 @@ import { WorkshopLayout } from "@/components/workshop-layout";
 import { Button } from "@/components/ui/button";
 import { demoCards } from "@/data/demo-cards";
 
-export const Route = createFileRoute('/demo-math')({
+export const Route = createFileRoute("/demo-math")({
   component: DemoMath,
-})
+});
 
 function DemoMath() {
   const mathDemo = demoCards.find((demo) => demo.href === "/demo-math");
@@ -52,7 +52,6 @@ function DemoMath() {
     },
   ];
 
-
   return (
     <WorkshopLayout>
       <div className="text-center mb-8">
@@ -84,7 +83,7 @@ function DemoMath() {
       </div>
 
       <AssistantRuntimeProvider runtime={runtimeBasic}>
-        <div style={{ display: !isToolsEnabled ? 'block' : 'none' }}>
+        <div style={{ display: !isToolsEnabled ? "block" : "none" }}>
           <WorkshopThread
             title="Base Model: Raw LLM Math Capabilities"
             description="Raw LLM mathematical abilities without external tools."
@@ -94,7 +93,7 @@ function DemoMath() {
       </AssistantRuntimeProvider>
 
       <AssistantRuntimeProvider runtime={runtimeEnhanced}>
-        <div style={{ display: isToolsEnabled ? 'block' : 'none' }}>
+        <div style={{ display: isToolsEnabled ? "block" : "none" }}>
           <WorkshopThread
             title="Tool-Enhanced: LLM with Calculator"
             description="Enhanced with precise calculation tools. Experience the difference!"

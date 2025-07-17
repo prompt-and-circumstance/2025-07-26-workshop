@@ -12,16 +12,24 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as DemoTokenizersRouteImport } from './routes/demo-tokenizers'
+import { Route as DemoPortfolioRouteImport } from './routes/demo-portfolio'
 import { Route as DemoMathRouteImport } from './routes/demo-math'
 import { Route as DemoKnowledgeRouteImport } from './routes/demo-knowledge'
 import { Route as IndexRouteImport } from './routes/index'
+import { ServerRoute as ApiPortfolioServerRouteImport } from './routes/api/portfolio'
 import { ServerRoute as ApiChatServerRouteImport } from './routes/api/chat'
+import { ServerRoute as ApiPortfolioResetServerRouteImport } from './routes/api/portfolio.reset'
 
 const rootServerRouteImport = createServerRootRoute()
 
 const DemoTokenizersRoute = DemoTokenizersRouteImport.update({
   id: '/demo-tokenizers',
   path: '/demo-tokenizers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoPortfolioRoute = DemoPortfolioRouteImport.update({
+  id: '/demo-portfolio',
+  path: '/demo-portfolio',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoMathRoute = DemoMathRouteImport.update({
@@ -39,22 +47,34 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPortfolioServerRoute = ApiPortfolioServerRouteImport.update({
+  id: '/api/portfolio',
+  path: '/api/portfolio',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
 const ApiChatServerRoute = ApiChatServerRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
   getParentRoute: () => rootServerRouteImport,
+} as any)
+const ApiPortfolioResetServerRoute = ApiPortfolioResetServerRouteImport.update({
+  id: '/reset',
+  path: '/reset',
+  getParentRoute: () => ApiPortfolioServerRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo-knowledge': typeof DemoKnowledgeRoute
   '/demo-math': typeof DemoMathRoute
+  '/demo-portfolio': typeof DemoPortfolioRoute
   '/demo-tokenizers': typeof DemoTokenizersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo-knowledge': typeof DemoKnowledgeRoute
   '/demo-math': typeof DemoMathRoute
+  '/demo-portfolio': typeof DemoPortfolioRoute
   '/demo-tokenizers': typeof DemoTokenizersRoute
 }
 export interface FileRoutesById {
@@ -62,42 +82,67 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/demo-knowledge': typeof DemoKnowledgeRoute
   '/demo-math': typeof DemoMathRoute
+  '/demo-portfolio': typeof DemoPortfolioRoute
   '/demo-tokenizers': typeof DemoTokenizersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo-knowledge' | '/demo-math' | '/demo-tokenizers'
+  fullPaths:
+    | '/'
+    | '/demo-knowledge'
+    | '/demo-math'
+    | '/demo-portfolio'
+    | '/demo-tokenizers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo-knowledge' | '/demo-math' | '/demo-tokenizers'
-  id: '__root__' | '/' | '/demo-knowledge' | '/demo-math' | '/demo-tokenizers'
+  to:
+    | '/'
+    | '/demo-knowledge'
+    | '/demo-math'
+    | '/demo-portfolio'
+    | '/demo-tokenizers'
+  id:
+    | '__root__'
+    | '/'
+    | '/demo-knowledge'
+    | '/demo-math'
+    | '/demo-portfolio'
+    | '/demo-tokenizers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoKnowledgeRoute: typeof DemoKnowledgeRoute
   DemoMathRoute: typeof DemoMathRoute
+  DemoPortfolioRoute: typeof DemoPortfolioRoute
   DemoTokenizersRoute: typeof DemoTokenizersRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/chat': typeof ApiChatServerRoute
+  '/api/portfolio': typeof ApiPortfolioServerRouteWithChildren
+  '/api/portfolio/reset': typeof ApiPortfolioResetServerRoute
 }
 export interface FileServerRoutesByTo {
   '/api/chat': typeof ApiChatServerRoute
+  '/api/portfolio': typeof ApiPortfolioServerRouteWithChildren
+  '/api/portfolio/reset': typeof ApiPortfolioResetServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
   '/api/chat': typeof ApiChatServerRoute
+  '/api/portfolio': typeof ApiPortfolioServerRouteWithChildren
+  '/api/portfolio/reset': typeof ApiPortfolioResetServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/chat'
+  fullPaths: '/api/chat' | '/api/portfolio' | '/api/portfolio/reset'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/chat'
-  id: '__root__' | '/api/chat'
+  to: '/api/chat' | '/api/portfolio' | '/api/portfolio/reset'
+  id: '__root__' | '/api/chat' | '/api/portfolio' | '/api/portfolio/reset'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
   ApiChatServerRoute: typeof ApiChatServerRoute
+  ApiPortfolioServerRoute: typeof ApiPortfolioServerRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -107,6 +152,13 @@ declare module '@tanstack/react-router' {
       path: '/demo-tokenizers'
       fullPath: '/demo-tokenizers'
       preLoaderRoute: typeof DemoTokenizersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo-portfolio': {
+      id: '/demo-portfolio'
+      path: '/demo-portfolio'
+      fullPath: '/demo-portfolio'
+      preLoaderRoute: typeof DemoPortfolioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo-math': {
@@ -134,6 +186,13 @@ declare module '@tanstack/react-router' {
 }
 declare module '@tanstack/react-start/server' {
   interface ServerFileRoutesByPath {
+    '/api/portfolio': {
+      id: '/api/portfolio'
+      path: '/api/portfolio'
+      fullPath: '/api/portfolio'
+      preLoaderRoute: typeof ApiPortfolioServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -141,13 +200,32 @@ declare module '@tanstack/react-start/server' {
       preLoaderRoute: typeof ApiChatServerRouteImport
       parentRoute: typeof rootServerRouteImport
     }
+    '/api/portfolio/reset': {
+      id: '/api/portfolio/reset'
+      path: '/reset'
+      fullPath: '/api/portfolio/reset'
+      preLoaderRoute: typeof ApiPortfolioResetServerRouteImport
+      parentRoute: typeof ApiPortfolioServerRoute
+    }
   }
 }
+
+interface ApiPortfolioServerRouteChildren {
+  ApiPortfolioResetServerRoute: typeof ApiPortfolioResetServerRoute
+}
+
+const ApiPortfolioServerRouteChildren: ApiPortfolioServerRouteChildren = {
+  ApiPortfolioResetServerRoute: ApiPortfolioResetServerRoute,
+}
+
+const ApiPortfolioServerRouteWithChildren =
+  ApiPortfolioServerRoute._addFileChildren(ApiPortfolioServerRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoKnowledgeRoute: DemoKnowledgeRoute,
   DemoMathRoute: DemoMathRoute,
+  DemoPortfolioRoute: DemoPortfolioRoute,
   DemoTokenizersRoute: DemoTokenizersRoute,
 }
 export const routeTree = rootRouteImport
@@ -155,6 +233,7 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiChatServerRoute: ApiChatServerRoute,
+  ApiPortfolioServerRoute: ApiPortfolioServerRouteWithChildren,
 }
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)

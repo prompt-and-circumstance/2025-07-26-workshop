@@ -55,6 +55,23 @@ const WORKSHOP_DEMOS: WorkshopDemo[] = [
       },
     },
   },
+  {
+    id: "portfolio",
+    name: "Write Operations",
+    description: "Experience AI's ability to modify data, not just read it.",
+    variants: {
+      basic: {
+        title: "Read-Only",
+        description: "AI can only view portfolio data",
+        demoId: "portfolio-read",
+      },
+      enhanced: {
+        title: "Read-Write",
+        description: "AI can modify investments, notes, and tasks",
+        demoId: "portfolio-write",
+      },
+    },
+  },
 ];
 
 export function getAllWorkshopDemos(): WorkshopDemo[] {

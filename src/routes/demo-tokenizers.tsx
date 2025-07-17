@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { WorkshopLayout } from "@/components/workshop-layout";
+import { getAllWorkshopDemos } from "@/lib/demos/workshop-demos";
 import { TokenizerDemo } from "@/components/tokenizer-demo";
 import { TokenizerComparison } from "@/components/tokenizer-comparison";
 import {
@@ -15,15 +16,21 @@ export const Route = createFileRoute("/demo-tokenizers")({
 });
 
 function TokenizerDemoPage() {
+  const tokenizerDemo = getAllWorkshopDemos().find(
+    (demo) => demo.id === "tokenizers"
+  );
+
+  if (!tokenizerDemo) {
+    return <div>Demo not found</div>;
+  }
+
   return (
     <WorkshopLayout>
       <div className="space-y-8">
         <div className="text-center">
-          <h1 className="text-3xl font-bold mb-4">Tokenizer Demo</h1>
+          <h1 className="text-3xl font-bold mb-4">{tokenizerDemo.name}</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explore how AI models break down text into tokens and understand the
-            implications for different languages, content types, and model
-            architectures.
+            {tokenizerDemo.description}
           </p>
         </div>
 

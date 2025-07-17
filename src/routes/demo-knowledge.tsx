@@ -12,17 +12,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { demoCards } from "@/data/demo-cards";
+import { getAllWorkshopDemos } from "@/lib/demos/workshop-demos";
+import { getDemoConfig } from "@/lib/demos/configs";
 
 export const Route = createFileRoute("/demo-knowledge")({
   component: DemoKnowledge,
 });
 
 function DemoKnowledge() {
-  const knowledgeDemo = demoCards.find(
-    (demo) => demo.href === "/demo-knowledge"
-  );
-  if (!knowledgeDemo) {
+  const knowledgeDemo = getAllWorkshopDemos().find((demo) => demo.id === "knowledge");
+  const basicConfig = getDemoConfig("knowledge-basic");
+  const enhancedConfig = getDemoConfig("knowledge-enhanced");
+  
+  if (!knowledgeDemo || !basicConfig || !enhancedConfig) {
     return <div>Demo not found</div>;
   }
 
@@ -31,44 +33,29 @@ function DemoKnowledge() {
   const runtimeBasic = useChatRuntime({
     api: "/api/chat",
     body: {
-      demoId: "knowledge-basic",
+      demoId: knowledgeDemo.variants.basic.demoId,
     },
   });
 
   const runtimeEnhanced = useChatRuntime({
     api: "/api/chat",
     body: {
-      demoId: "knowledge-enhanced",
+      demoId: knowledgeDemo.variants.enhanced.demoId,
     },
   });
 
-  const suggestions = [
-    {
-      text: "What's the current Bitcoin price?",
-      prompt: "What's the current Bitcoin price?",
-    },
-    {
-      text: "How did TSMC's latest earnings report perform?",
-      prompt: "How did TSMC's latest earnings report perform?",
-    },
-    {
-      text: "What are Tesla's Q4 2024 delivery numbers?",
-      prompt: "What are Tesla's Q4 2024 delivery numbers?",
-    },
-    {
-      text: "Can you provide information about our client ACME Corp?",
-      prompt: "Can you provide information about our client ACME Corp?",
-    },
-  ];
+  const suggestions = basicConfig.suggestions.map(suggestion => ({
+    text: suggestion,
+    prompt: suggestion,
+  }));
 
   return (
     <WorkshopLayout>
       <div className="space-y-8">
         <div className="text-center">
-          <h1 className="text-3xl font-bold mb-4">LLMs and Knowledge</h1>
+          <h1 className="text-3xl font-bold mb-4">{knowledgeDemo.name}</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explore how LLMs handle knowledge gaps and the transformative power
-            of external tools for accessing recent events and proprietary data.
+            {knowledgeDemo.description}
           </p>
         </div>
 
@@ -79,14 +66,14 @@ function DemoKnowledge() {
               size="sm"
               onClick={() => setIsToolsEnabled(false)}
             >
-              Base Model
+              {knowledgeDemo.variants.basic.title}
             </Button>
             <Button
               variant={isToolsEnabled ? "default" : "ghost"}
               size="sm"
               onClick={() => setIsToolsEnabled(true)}
             >
-              Tool-Enhanced
+              {knowledgeDemo.variants.enhanced.title}
             </Button>
           </div>
         </div>
@@ -94,8 +81,8 @@ function DemoKnowledge() {
         <AssistantRuntimeProvider runtime={runtimeBasic}>
           <div style={{ display: !isToolsEnabled ? "block" : "none" }}>
             <WorkshopThread
-              title="Base Model: Knowledge Cutoff Limitations"
-              description="Experience the limitations of LLM knowledge cutoffs and lack of proprietary data access."
+              title={`${knowledgeDemo.variants.basic.title}: Knowledge Cutoff Limitations`}
+              description={knowledgeDemo.variants.basic.description}
               suggestions={suggestions}
             />
           </div>
@@ -104,8 +91,8 @@ function DemoKnowledge() {
         <AssistantRuntimeProvider runtime={runtimeEnhanced}>
           <div style={{ display: isToolsEnabled ? "block" : "none" }}>
             <WorkshopThread
-              title="Tool-Enhanced: Web Search + Client Database"
-              description="See how external tools provide access to recent information and proprietary data."
+              title={`${knowledgeDemo.variants.enhanced.title}: Web Search + Client Database`}
+              description={knowledgeDemo.variants.enhanced.description}
               suggestions={suggestions}
             />
           </div>
