@@ -28,8 +28,6 @@ export const TOOL_DESCRIPTIONS = {
       - Compound interest: (1500 * Math.pow(1.08,10)) - 1500
       - Square roots: Math.sqrt(16) + 5
       - Trigonometry: Math.sin(Math.PI/2)
-
-      ⚠️ Educational use only - this allows arbitrary JavaScript in a controlled environment
     `,
 
     // This describes what input the tool expects
@@ -41,8 +39,6 @@ export const TOOL_DESCRIPTIONS = {
       - '(1500 * Math.pow(1.08,10)) - 1500'
       - 'Math.sqrt(16) + 5'
       - 'Math.sin(Math.PI/2)'
-
-      ⚠️ WARNING: Arbitrary JavaScript is allowed. Do not use in production.
     `,
   },
 

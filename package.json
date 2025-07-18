@@ -41,7 +41,6 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.11",
-    "@types/cheerio": "^1.0.0",
     "@types/node": "^22.5.4",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
@@ -51,5 +50,13 @@
     "typescript": "^5.7.2",
     "vite": "^6.3.5",
     "vite-tsconfig-paths": "^5.1.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "node-domexception": "npm:domexception@^4.0.0"
+    }
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

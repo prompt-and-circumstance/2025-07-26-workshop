@@ -13,20 +13,12 @@ export const webSearchTool = tool({
       .describe("Maximum number of results to return"),
   }),
   execute: async ({ query, maxResults }) => {
-    console.log(
-      "🔍 webSearch called with query:",
-      query,
-      "maxResults:",
-      maxResults
-    );
     try {
       // Check if BRAVE_API_KEY is available
       const apiKey = process.env.BRAVE_API_KEY;
       if (!apiKey) {
-        console.log("❌ BRAVE_API_KEY not set");
         throw new Error("BRAVE_API_KEY environment variable is not set");
       }
-      console.log("✅ BRAVE_API_KEY found");
 
       // Use Brave Search API
       const braveSearchUrl = `https://api.search.brave.com/res/v1/web/search`;
@@ -39,10 +31,6 @@ export const webSearchTool = tool({
         search_lang: "en",
       });
 
-      console.log(
-        "🌐 Making API call to:",
-        `${braveSearchUrl}?${params.toString()}`
-      );
       const response = await fetch(`${braveSearchUrl}?${params.toString()}`, {
         headers: {
           "X-Subscription-Token": apiKey,
@@ -51,17 +39,13 @@ export const webSearchTool = tool({
         method: "GET",
       });
 
-      console.log("📡 Response status:", response.status);
       if (!response.ok) {
-        console.log("❌ API call failed with status:", response.status);
         throw new Error(
           `Brave Search API responded with status ${response.status}`
         );
       }
 
       const data = await response.json();
-      console.log("📊 Response data keys:", Object.keys(data));
-      console.log("📊 Web results length:", data.web?.results?.length || 0);
       let results: any[] = [];
 
       // Parse Brave Search results
@@ -95,10 +79,9 @@ export const webSearchTool = tool({
         message: `Found ${results.length} web search results for "${query}" using Brave Search API. This provides access to current information from Brave's independent web index.`,
         searchDate: new Date().toISOString().split("T")[0],
       };
-      console.log("✅ webSearch returning results:", results.length, "items");
       return finalResult;
     } catch (error) {
-      console.error("❌ Brave Search API error:", error);
+      console.error("Brave Search API error:", error);
 
       const errorResult = {
         query,
@@ -118,7 +101,6 @@ export const webSearchTool = tool({
         }`,
         searchDate: new Date().toISOString().split("T")[0],
       };
-      console.log("❌ webSearch returning error result");
       return errorResult;
     }
   },
