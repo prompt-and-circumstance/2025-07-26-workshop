@@ -1,5 +1,5 @@
 import type { DemoConfig } from "./types";
-import { DEMO_PROMPTS } from "../prompts";
+import { DEMO_PROMPTS } from "../prompts/demo-prompts";
 
 export const DEMO_CONFIGS: Record<string, DemoConfig> = {
   "math-basic": {

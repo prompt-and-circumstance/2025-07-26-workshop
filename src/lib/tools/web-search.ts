@@ -1,6 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { TOOL_DESCRIPTIONS } from "../prompts";
+import { TOOL_DESCRIPTIONS } from "../prompts/tool-descriptions";
 
 export const webSearchTool = tool({
   description: TOOL_DESCRIPTIONS.webSearch.description,

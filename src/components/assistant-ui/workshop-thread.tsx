@@ -6,6 +6,7 @@ import {
   ThreadPrimitive,
 } from "@assistant-ui/react";
 import type { FC } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 import {
   ArrowDownIcon,
   CheckIcon,
@@ -19,6 +20,11 @@ import {
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { MarkdownText } from "@/components/assistant-ui/markdown-text";
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button";
 import { ToolFallback } from "./tool-fallback";
@@ -34,21 +40,25 @@ interface WorkshopThreadProps {
   suggestions?: Suggestion[];
 }
 
-export const WorkshopThread: FC<WorkshopThreadProps> = ({ 
+export const WorkshopThread: FC<WorkshopThreadProps> = ({
   title = "How can I help you today?",
   description,
-  suggestions = []
+  suggestions = [],
 }) => {
   return (
     <ThreadPrimitive.Root
-      className="bg-background box-border flex flex-col overflow-hidden"
+      className="bg-background/85 box-border flex flex-col overflow-hidden backdrop-blur-sm"
       style={{
         ["--thread-max-width" as string]: "72rem",
-        height: "600px",
+        height: "clamp(20rem, 50vh, 32rem)",
       }}
     >
       <ThreadPrimitive.Viewport className="flex h-full flex-col items-center overflow-y-auto scroll-smooth bg-inherit px-4 pt-8">
-        <WorkshopThreadWelcome title={title} description={description} suggestions={suggestions} />
+        <WorkshopThreadWelcome
+          title={title}
+          description={description}
+          suggestions={suggestions}
+        />
 
         <ThreadPrimitive.Messages
           components={{
@@ -109,23 +119,59 @@ const WorkshopThreadWelcome: FC<{
   );
 };
 
-const WorkshopThreadWelcomeSuggestions: FC<{ suggestions: Suggestion[] }> = ({ suggestions }) => {
+const SuggestionWithConditionalHover: FC<{ suggestion: Suggestion }> = ({
+  suggestion,
+}) => {
+  const textRef = useRef<HTMLSpanElement>(null);
+  const [isTruncated, setIsTruncated] = useState(false);
+
+  useLayoutEffect(() => {
+    const element = textRef.current;
+    if (!element) return;
+
+    const isTextTruncated = element.scrollHeight > element.clientHeight;
+    setIsTruncated(isTextTruncated);
+  }, [suggestion.text]);
+
+  const suggestionButton = (
+    <ThreadPrimitive.Suggestion
+      className="hover:bg-muted/80 flex max-w-lg grow basis-0 flex-col items-center justify-center rounded-lg border p-3 transition-colors ease-in bg-card/90 backdrop-blur-sm"
+      prompt={suggestion.prompt}
+      method="replace"
+      autoSend
+    >
+      <span
+        ref={textRef}
+        className="line-clamp-2 text-ellipsis text-sm font-semibold"
+      >
+        {suggestion.text}
+      </span>
+    </ThreadPrimitive.Suggestion>
+  );
+
+  if (!isTruncated) {
+    return suggestionButton;
+  }
+
+  return (
+    <HoverCard>
+      <HoverCardTrigger asChild>{suggestionButton}</HoverCardTrigger>
+      <HoverCardContent className="max-w-sm w-auto bg-popover/95 backdrop-blur-sm">
+        <div className="text-sm whitespace-pre-wrap">{suggestion.text}</div>
+      </HoverCardContent>
+    </HoverCard>
+  );
+};
+
+const WorkshopThreadWelcomeSuggestions: FC<{ suggestions: Suggestion[] }> = ({
+  suggestions,
+}) => {
   if (suggestions.length === 0) return null;
 
   return (
     <div className="mt-3 flex w-full items-stretch justify-center gap-4">
       {suggestions.map((suggestion, index) => (
-        <ThreadPrimitive.Suggestion
-          key={index}
-          className="hover:bg-muted/80 flex max-w-sm grow basis-0 flex-col items-center justify-center rounded-lg border p-3 transition-colors ease-in"
-          prompt={suggestion.prompt}
-          method="replace"
-          autoSend
-        >
-          <span className="line-clamp-2 text-ellipsis text-sm font-semibold">
-            {suggestion.text}
-          </span>
-        </ThreadPrimitive.Suggestion>
+        <SuggestionWithConditionalHover key={index} suggestion={suggestion} />
       ))}
     </div>
   );

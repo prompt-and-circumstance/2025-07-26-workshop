@@ -2,19 +2,19 @@
 
 @theme {
   /* Cool neutral backgrounds to complement blue gradient */
-  --color-background: 210 15% 98%;
+  --color-background: 255 255 255;
   --color-foreground: 240 10% 3.9%;
-  --color-card: 210 20% 99%;
+  --color-card: 255 255 255;
   --color-card-foreground: 240 10% 3.9%;
-  --color-popover: 210 25% 99%;
+  --color-popover: 255 255 255;
   --color-popover-foreground: 240 10% 3.9%;
   --color-primary: oklch(0.65 0.18 35);
   --color-primary-foreground: 210 15% 98%;
-  --color-secondary: 210 8% 95%;
+  --color-secondary: 255 255 255;
   --color-secondary-foreground: 240 5.9% 10%;
-  --color-muted: 210 8% 95%;
+  --color-muted: 255 255 255;
   --color-muted-foreground: 240 3.8% 46.1%;
-  --color-accent: 210 12% 96%;
+  --color-accent: 255 255 255;
   --color-accent-foreground: 240 5.9% 10%;
   --color-destructive: 0 84.2% 60.2%;
   --color-destructive-foreground: 210 15% 98%;
