@@ -12,14 +12,14 @@
   --color-primary-foreground: 210 15% 98%;
   --color-secondary: 255 255 255;
   --color-secondary-foreground: 240 5.9% 10%;
-  --color-muted: 255 255 255;
+  --color-muted: 210 12% 94%;
   --color-muted-foreground: 240 3.8% 46.1%;
-  --color-accent: 255 255 255;
+  --color-accent: 210 12% 94%;
   --color-accent-foreground: 240 5.9% 10%;
   --color-destructive: 0 84.2% 60.2%;
   --color-destructive-foreground: 210 15% 98%;
   --color-border: 210 15% 88%;
-  --color-input: 210 15% 88%;
+  --color-input: 210 15% 82%;
   --color-ring: 240 5.9% 10%;
   --color-chart-1: 12 76% 61%;
   --color-chart-2: 173 58% 39%;

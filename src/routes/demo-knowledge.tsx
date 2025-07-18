@@ -4,6 +4,7 @@ import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
 import { WorkshopThread } from "@/components/assistant-ui/workshop-thread";
 import { WorkshopLayout } from "@/components/workshop-layout";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import {
   Card,
   CardContent,
@@ -68,21 +69,18 @@ function DemoKnowledge() {
         </div>
 
         <div className="flex justify-center">
-          <div className="flex items-center gap-4 bg-card border rounded-lg p-2">
-            <Button
-              variant={!toolsEnabled ? "default" : "ghost"}
-              size="sm"
-              onClick={() => navigate({ search: { toolsEnabled: false } })}
-            >
-              {knowledgeDemo.variants.basic.title}
-            </Button>
-            <Button
-              variant={toolsEnabled ? "default" : "ghost"}
-              size="sm"
-              onClick={() => navigate({ search: { toolsEnabled: true } })}
-            >
-              {knowledgeDemo.variants.enhanced.title}
-            </Button>
+          <div className="flex items-center gap-4 bg-card border rounded-lg p-4">
+            <div className="flex items-center space-x-3">
+              <Switch
+                checked={toolsEnabled}
+                onCheckedChange={(checked) => 
+                  navigate({ search: { toolsEnabled: checked } })
+                }
+              />
+              <span className="text-sm font-medium w-28 text-left">
+                {toolsEnabled ? knowledgeDemo.variants.enhanced.title : knowledgeDemo.variants.basic.title}
+              </span>
+            </div>
           </div>
         </div>
 

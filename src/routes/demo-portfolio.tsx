@@ -5,6 +5,7 @@ import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
 import { WorkshopThread } from "@/components/assistant-ui/workshop-thread";
 import { WorkshopLayout } from "@/components/workshop-layout";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import {
   Card,
   CardContent,
@@ -119,21 +120,18 @@ function DemoPortfolio() {
         </div>
 
         <div className="flex justify-center">
-          <div className="flex items-center gap-4 bg-card border rounded-lg p-2">
-            <Button
-              variant={!writeEnabled ? "default" : "ghost"}
-              size="sm"
-              onClick={() => navigate({ search: { writeEnabled: false } })}
-            >
-              {portfolioDemo.variants.basic.title}
-            </Button>
-            <Button
-              variant={writeEnabled ? "default" : "ghost"}
-              size="sm"
-              onClick={() => navigate({ search: { writeEnabled: true } })}
-            >
-              {portfolioDemo.variants.enhanced.title}
-            </Button>
+          <div className="flex items-center gap-4 bg-card border rounded-lg p-4">
+            <div className="flex items-center space-x-3">
+              <Switch
+                checked={writeEnabled}
+                onCheckedChange={(checked) => 
+                  navigate({ search: { writeEnabled: checked } })
+                }
+              />
+              <span className="text-sm font-medium w-20 text-left">
+                {writeEnabled ? portfolioDemo.variants.enhanced.title : portfolioDemo.variants.basic.title}
+              </span>
+            </div>
           </div>
         </div>
 
