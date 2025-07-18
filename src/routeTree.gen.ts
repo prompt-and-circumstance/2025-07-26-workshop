@@ -11,6 +11,7 @@
 import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DemoToolConfusionRouteImport } from './routes/demo-tool-confusion'
 import { Route as DemoTokenizersRouteImport } from './routes/demo-tokenizers'
 import { Route as DemoPortfolioRouteImport } from './routes/demo-portfolio'
 import { Route as DemoMathRouteImport } from './routes/demo-math'
@@ -22,6 +23,11 @@ import { ServerRoute as ApiPortfolioResetServerRouteImport } from './routes/api/
 
 const rootServerRouteImport = createServerRootRoute()
 
+const DemoToolConfusionRoute = DemoToolConfusionRouteImport.update({
+  id: '/demo-tool-confusion',
+  path: '/demo-tool-confusion',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemoTokenizersRoute = DemoTokenizersRouteImport.update({
   id: '/demo-tokenizers',
   path: '/demo-tokenizers',
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/demo-math': typeof DemoMathRoute
   '/demo-portfolio': typeof DemoPortfolioRoute
   '/demo-tokenizers': typeof DemoTokenizersRoute
+  '/demo-tool-confusion': typeof DemoToolConfusionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/demo-math': typeof DemoMathRoute
   '/demo-portfolio': typeof DemoPortfolioRoute
   '/demo-tokenizers': typeof DemoTokenizersRoute
+  '/demo-tool-confusion': typeof DemoToolConfusionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/demo-math': typeof DemoMathRoute
   '/demo-portfolio': typeof DemoPortfolioRoute
   '/demo-tokenizers': typeof DemoTokenizersRoute
+  '/demo-tool-confusion': typeof DemoToolConfusionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -93,6 +102,7 @@ export interface FileRouteTypes {
     | '/demo-math'
     | '/demo-portfolio'
     | '/demo-tokenizers'
+    | '/demo-tool-confusion'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/demo-math'
     | '/demo-portfolio'
     | '/demo-tokenizers'
+    | '/demo-tool-confusion'
   id:
     | '__root__'
     | '/'
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/demo-math'
     | '/demo-portfolio'
     | '/demo-tokenizers'
+    | '/demo-tool-confusion'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   DemoMathRoute: typeof DemoMathRoute
   DemoPortfolioRoute: typeof DemoPortfolioRoute
   DemoTokenizersRoute: typeof DemoTokenizersRoute
+  DemoToolConfusionRoute: typeof DemoToolConfusionRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/chat': typeof ApiChatServerRoute
@@ -147,6 +160,13 @@ export interface RootServerRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/demo-tool-confusion': {
+      id: '/demo-tool-confusion'
+      path: '/demo-tool-confusion'
+      fullPath: '/demo-tool-confusion'
+      preLoaderRoute: typeof DemoToolConfusionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo-tokenizers': {
       id: '/demo-tokenizers'
       path: '/demo-tokenizers'
@@ -227,6 +247,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemoMathRoute: DemoMathRoute,
   DemoPortfolioRoute: DemoPortfolioRoute,
   DemoTokenizersRoute: DemoTokenizersRoute,
+  DemoToolConfusionRoute: DemoToolConfusionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

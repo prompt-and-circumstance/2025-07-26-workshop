@@ -72,7 +72,7 @@ export const WorkshopThread: FC<WorkshopThreadProps> = ({
           <div className="min-h-8 flex-grow" />
         </ThreadPrimitive.If>
 
-        <div className="sticky bottom-0 mt-3 flex w-full max-w-[var(--thread-max-width)] flex-col items-center justify-end rounded-t-lg bg-background/80 backdrop-blur-sm pb-4">
+        <div className="sticky bottom-0 mt-3 flex w-full max-w-[var(--thread-max-width)] flex-col items-center justify-end rounded-t-lg bg-background backdrop-blur-sm pb-4">
           <ThreadScrollToBottom />
           <Composer />
         </div>
@@ -179,7 +179,7 @@ const WorkshopThreadWelcomeSuggestions: FC<{ suggestions: Suggestion[] }> = ({
 
 const Composer: FC = () => {
   return (
-    <ComposerPrimitive.Root className="focus-within:border-ring/20 flex w-full flex-wrap items-end rounded-lg border bg-inherit px-2.5 shadow-sm transition-colors ease-in">
+    <ComposerPrimitive.Root className="focus-within:border-ring/20 flex w-full flex-wrap items-end rounded-lg border bg-white px-2.5 shadow-sm transition-colors ease-in">
       <ComposerPrimitive.Input
         rows={1}
         autoFocus

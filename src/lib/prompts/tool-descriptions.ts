@@ -1,15 +1,15 @@
 /**
  * 🔧 TOOL DESCRIPTIONS - These appear when the AI describes what tools it can use
- * 
+ *
  * This file contains all the tool descriptions that define what each tool does
  * and how it should be used. Non-technical users can safely modify these
  * descriptions to change how tools are presented to the AI.
- * 
+ *
  * 📝 HOW TO USE:
  * 1. Find the tool you want to change
  * 2. Edit the text between the backticks (``)
  * 3. Save the file and refresh your browser
- * 
+ *
  * 🚨 IMPORTANT: Don't change the structure (the { } brackets or the "quotes")
  */
 

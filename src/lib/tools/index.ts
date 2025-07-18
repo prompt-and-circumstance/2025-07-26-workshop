@@ -14,8 +14,28 @@ import {
   completeTaskTool,
 } from "./portfolio-write";
 import { webFetchTool } from "./web-fetch";
+import {
+  getStockPrice,
+  convertCurrency,
+  getCurrencyRate,
+  calculateExchange,
+  fetchStockData,
+  lookupStock,
+  exchangeRateHistory,
+  formatCurrency,
+  getQuote,
+  currencyCalculator,
+  getMarketData,
+  performExchange,
+  checkPrice,
+  forexConvert,
+  analyzeStock,
+  getStockPricePoor,
+  convertCurrencyPoor,
+} from "./currency";
 
 export const TOOL_REGISTRY = {
+  // Original tools
   calculator: calculatorTool,
   "web-search": webSearchTool,
   "web-fetch": webFetchTool,
@@ -28,6 +48,25 @@ export const TOOL_REGISTRY = {
   "update-client-note": updateClientNoteTool,
   "create-task": createTaskTool,
   "complete-task": completeTaskTool,
+  // Currency tools
+  "get-stock-price": getStockPrice,
+  "convert-currency": convertCurrency,
+  "get-currency-rate": getCurrencyRate,
+  "calculate-exchange": calculateExchange,
+  "fetch-stock-data": fetchStockData,
+  "lookup-stock": lookupStock,
+  "exchange-rate-history": exchangeRateHistory,
+  "format-currency": formatCurrency,
+  "get-quote": getQuote,
+  "currency-calculator": currencyCalculator,
+  "get-market-data": getMarketData,
+  "perform-exchange": performExchange,
+  "check-price": checkPrice,
+  "forex-convert": forexConvert,
+  "analyze-stock": analyzeStock,
+  // Maximally confusing tools
+  "portfolio-risk-assessment": getStockPricePoor,
+  "tax-liability-calculator": convertCurrencyPoor,
 } as const;
 
 export type ToolName = keyof typeof TOOL_REGISTRY;

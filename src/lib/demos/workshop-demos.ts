@@ -72,6 +72,24 @@ const WORKSHOP_DEMOS: WorkshopDemo[] = [
       },
     },
   },
+  {
+    id: "tool-confusion",
+    name: "Tool Confusion",
+    description:
+      "Explore how AI can get confused by too many tools and how to avoid it.",
+    variants: {
+      basic: {
+        title: "Focused Tools",
+        description: "AI with carefully selected relevant tools",
+        demoId: "tools-focused",
+      },
+      enhanced: {
+        title: "Tool Overload",
+        description: "AI with many tools, including irrelevant ones",
+        demoId: "tools-overload",
+      },
+    },
+  },
 ];
 
 export function getAllWorkshopDemos(): WorkshopDemo[] {

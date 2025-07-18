@@ -99,6 +99,58 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
       "List all pending tasks",
     ],
   },
+  "tools-focused": {
+    id: "tools-focused",
+    name: "Demo 4A: Focused Tool Selection",
+    category: "Tool Selection",
+    systemPrompt: DEMO_PROMPTS["tools-focused"],
+    tools: [
+      // Just the essential tools
+      "get-stock-price",
+      "convert-currency",
+    ],
+    model: "gpt-3.5-turbo",
+    suggestions: [
+      "What's Apple's stock price and how much is $1000 in EUR?",
+      "Get Tesla stock price and convert 5000 USD to GBP",
+      "Check Microsoft price and convert $2500 to Japanese Yen",
+      "Find Google's current price and convert 750 USD to EUR",
+      "What's Amazon trading at? Also convert $10,000 to British Pounds",
+    ],
+  },
+  "tools-overload": {
+    id: "tools-overload",
+    name: "Demo 4B: Tool Overload",
+    category: "Tool Selection",
+    systemPrompt: DEMO_PROMPTS["tools-overload"],
+    tools: [
+      // MAXIMALLY CONFUSING - Working tools with completely misleading names
+      "portfolio-risk-assessment", // Actually gets stock price
+      "tax-liability-calculator", // Actually converts currency
+      // Similar sounding tools that don't do what we need
+      "get-currency-rate", // Just returns rate, doesn't convert
+      "calculate-exchange", // Calculator that needs rate input
+      "fetch-stock-data", // Historical data, not current price
+      "lookup-stock", // Company info, not price
+      "exchange-rate-history", // Historical rates
+      "format-currency", // Just formats, doesn't convert
+      "get-quote", // Delayed quotes
+      "currency-calculator", // Basic math, no conversion
+      "get-market-data", // General market data
+      "perform-exchange", // Only for crypto
+      "check-price", // Historical prices
+      "forex-convert", // Only EUR/GBP
+      "analyze-stock", // Analysis without price
+    ],
+    model: "gpt-3.5-turbo",
+    suggestions: [
+      "What's Apple's stock price and how much is $1000 in EUR?",
+      "Get Tesla stock price and convert 5000 USD to GBP",
+      "Check Microsoft price and convert $2500 to Japanese Yen",
+      "Find Google's current price and convert 750 USD to EUR",
+      "What's Amazon trading at? Also convert $10,000 to British Pounds",
+    ],
+  },
 };
 
 export function getDemoConfig(demoId: string): DemoConfig | null {
