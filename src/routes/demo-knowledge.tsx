@@ -1,5 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AssistantRuntimeProvider } from "@assistant-ui/react";
 import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
 import { WorkshopThread } from "@/components/assistant-ui/workshop-thread";
@@ -14,21 +13,30 @@ import {
 } from "@/components/ui/card";
 import { getAllWorkshopDemos } from "@/lib/demos/workshop-demos";
 import { getDemoConfig } from "@/lib/demos/configs";
+import { z } from "zod";
+
+const knowledgeSearchSchema = z.object({
+  toolsEnabled: z.coerce.boolean().optional(),
+});
 
 export const Route = createFileRoute("/demo-knowledge")({
+  validateSearch: (search) => knowledgeSearchSchema.parse(search),
   component: DemoKnowledge,
 });
 
 function DemoKnowledge() {
-  const knowledgeDemo = getAllWorkshopDemos().find((demo) => demo.id === "knowledge");
+  const knowledgeDemo = getAllWorkshopDemos().find(
+    (demo) => demo.id === "knowledge"
+  );
   const basicConfig = getDemoConfig("knowledge-basic");
   const enhancedConfig = getDemoConfig("knowledge-enhanced");
-  
+
   if (!knowledgeDemo || !basicConfig || !enhancedConfig) {
     return <div>Demo not found</div>;
   }
 
-  const [isToolsEnabled, setIsToolsEnabled] = useState(false);
+  const { toolsEnabled } = Route.useSearch();
+  const navigate = useNavigate({ from: Route.fullPath });
 
   const runtimeBasic = useChatRuntime({
     api: "/api/chat",
@@ -44,7 +52,7 @@ function DemoKnowledge() {
     },
   });
 
-  const suggestions = basicConfig.suggestions.map(suggestion => ({
+  const suggestions = basicConfig.suggestions.map((suggestion) => ({
     text: suggestion,
     prompt: suggestion,
   }));
@@ -62,16 +70,16 @@ function DemoKnowledge() {
         <div className="flex justify-center">
           <div className="flex items-center gap-4 bg-card border rounded-lg p-2">
             <Button
-              variant={!isToolsEnabled ? "default" : "ghost"}
+              variant={!toolsEnabled ? "default" : "ghost"}
               size="sm"
-              onClick={() => setIsToolsEnabled(false)}
+              onClick={() => navigate({ search: { toolsEnabled: false } })}
             >
               {knowledgeDemo.variants.basic.title}
             </Button>
             <Button
-              variant={isToolsEnabled ? "default" : "ghost"}
+              variant={toolsEnabled ? "default" : "ghost"}
               size="sm"
-              onClick={() => setIsToolsEnabled(true)}
+              onClick={() => navigate({ search: { toolsEnabled: true } })}
             >
               {knowledgeDemo.variants.enhanced.title}
             </Button>
@@ -79,7 +87,7 @@ function DemoKnowledge() {
         </div>
 
         <AssistantRuntimeProvider runtime={runtimeBasic}>
-          <div style={{ display: !isToolsEnabled ? "block" : "none" }}>
+          <div style={{ display: !toolsEnabled ? "block" : "none" }}>
             <WorkshopThread
               title={`${knowledgeDemo.variants.basic.title}: Knowledge Cutoff Limitations`}
               description={knowledgeDemo.variants.basic.description}
@@ -89,7 +97,7 @@ function DemoKnowledge() {
         </AssistantRuntimeProvider>
 
         <AssistantRuntimeProvider runtime={runtimeEnhanced}>
-          <div style={{ display: isToolsEnabled ? "block" : "none" }}>
+          <div style={{ display: toolsEnabled ? "block" : "none" }}>
             <WorkshopThread
               title={`${knowledgeDemo.variants.enhanced.title}: Web Search + Client Database`}
               description={knowledgeDemo.variants.enhanced.description}
@@ -132,6 +140,16 @@ function DemoKnowledge() {
             </div>
           </CardContent>
         </Card>
+
+        <div className="flex justify-center">
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => window.location.reload()}
+          >
+            Reset Chat
+          </Button>
+        </div>
       </div>
     </WorkshopLayout>
   );

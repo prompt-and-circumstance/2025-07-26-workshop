@@ -1,13 +1,18 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AssistantRuntimeProvider } from "@assistant-ui/react";
 import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
 import { WorkshopThread } from "@/components/assistant-ui/workshop-thread";
 import { WorkshopLayout } from "@/components/workshop-layout";
 import { Button } from "@/components/ui/button";
 import { demoCards } from "@/data/demo-cards";
+import { z } from "zod";
+
+const mathSearchSchema = z.object({
+  toolsEnabled: z.coerce.boolean().optional(),
+});
 
 export const Route = createFileRoute("/demo-math")({
+  validateSearch: (search) => mathSearchSchema.parse(search),
   component: DemoMath,
 });
 
@@ -17,7 +22,8 @@ function DemoMath() {
     return <div>Demo not found</div>;
   }
 
-  const [isToolsEnabled, setIsToolsEnabled] = useState(false);
+  const { toolsEnabled } = Route.useSearch();
+  const navigate = useNavigate({ from: Route.fullPath });
 
   const runtimeBasic = useChatRuntime({
     api: "/api/chat",
@@ -66,16 +72,24 @@ function DemoMath() {
       <div className="mb-6 flex justify-center">
         <div className="flex items-center gap-4 bg-card border rounded-lg p-2">
           <Button
-            variant={!isToolsEnabled ? "default" : "ghost"}
+            variant={!toolsEnabled ? "default" : "ghost"}
             size="sm"
-            onClick={() => setIsToolsEnabled(false)}
+            onClick={() =>
+              navigate({
+                search: (prev) => ({ ...prev, toolsEnabled: false }),
+              })
+            }
           >
             Base Model
           </Button>
           <Button
-            variant={isToolsEnabled ? "default" : "ghost"}
+            variant={toolsEnabled ? "default" : "ghost"}
             size="sm"
-            onClick={() => setIsToolsEnabled(true)}
+            onClick={() =>
+              navigate({
+                search: (prev) => ({ ...prev, toolsEnabled: true }),
+              })
+            }
           >
             Tool-Enhanced
           </Button>
@@ -83,7 +97,7 @@ function DemoMath() {
       </div>
 
       <AssistantRuntimeProvider runtime={runtimeBasic}>
-        <div style={{ display: !isToolsEnabled ? "block" : "none" }}>
+        <div style={{ display: !toolsEnabled ? "block" : "none" }}>
           <WorkshopThread
             title="Base Model: Raw LLM Math Capabilities"
             description="Raw LLM mathematical abilities without external tools."
@@ -93,7 +107,7 @@ function DemoMath() {
       </AssistantRuntimeProvider>
 
       <AssistantRuntimeProvider runtime={runtimeEnhanced}>
-        <div style={{ display: isToolsEnabled ? "block" : "none" }}>
+        <div style={{ display: toolsEnabled ? "block" : "none" }}>
           <WorkshopThread
             title="Tool-Enhanced: LLM with Calculator"
             description="Enhanced with precise calculation tools. Experience the difference!"
@@ -101,6 +115,16 @@ function DemoMath() {
           />
         </div>
       </AssistantRuntimeProvider>
+
+      <div className="flex justify-center mt-8">
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={() => window.location.reload()}
+        >
+          Reset Chat
+        </Button>
+      </div>
     </WorkshopLayout>
   );
 }

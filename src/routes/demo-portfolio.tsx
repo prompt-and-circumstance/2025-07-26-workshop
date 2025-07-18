@@ -1,6 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { AssistantRuntimeProvider } from "@assistant-ui/react";
 import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
 import { WorkshopThread } from "@/components/assistant-ui/workshop-thread";
@@ -22,8 +21,14 @@ import {
   type Task,
   type PortfolioState,
 } from "@/lib/portfolio-state";
+import { z } from "zod";
+
+const portfolioSearchSchema = z.object({
+  writeEnabled: z.coerce.boolean().optional(),
+});
 
 export const Route = createFileRoute("/demo-portfolio")({
+  validateSearch: (search) => portfolioSearchSchema.parse(search),
   component: DemoPortfolio,
 });
 
@@ -38,8 +43,8 @@ function DemoPortfolio() {
     return <div>Demo not found</div>;
   }
 
-  const [isWriteEnabled, setIsWriteEnabled] = useState(false);
-  const queryClient = useQueryClient();
+  const { writeEnabled } = Route.useSearch();
+  const navigate = useNavigate({ from: Route.fullPath });
 
   // Fetch portfolio state with auto-refresh
   const {
@@ -116,16 +121,16 @@ function DemoPortfolio() {
         <div className="flex justify-center">
           <div className="flex items-center gap-4 bg-card border rounded-lg p-2">
             <Button
-              variant={!isWriteEnabled ? "default" : "ghost"}
+              variant={!writeEnabled ? "default" : "ghost"}
               size="sm"
-              onClick={() => setIsWriteEnabled(false)}
+              onClick={() => navigate({ search: { writeEnabled: false } })}
             >
               {portfolioDemo.variants.basic.title}
             </Button>
             <Button
-              variant={isWriteEnabled ? "default" : "ghost"}
+              variant={writeEnabled ? "default" : "ghost"}
               size="sm"
-              onClick={() => setIsWriteEnabled(true)}
+              onClick={() => navigate({ search: { writeEnabled: true } })}
             >
               {portfolioDemo.variants.enhanced.title}
             </Button>
@@ -288,7 +293,7 @@ function DemoPortfolio() {
 
         {/* AI Chat Interface */}
         <AssistantRuntimeProvider runtime={runtimeReadOnly}>
-          <div style={{ display: !isWriteEnabled ? "block" : "none" }}>
+          <div style={{ display: !writeEnabled ? "block" : "none" }}>
             <WorkshopThread
               title={`${portfolioDemo.variants.basic.title}: AI Can Only View Data`}
               description={portfolioDemo.variants.basic.description}
@@ -298,7 +303,7 @@ function DemoPortfolio() {
         </AssistantRuntimeProvider>
 
         <AssistantRuntimeProvider runtime={runtimeReadWrite}>
-          <div style={{ display: isWriteEnabled ? "block" : "none" }}>
+          <div style={{ display: writeEnabled ? "block" : "none" }}>
             <WorkshopThread
               title={`${portfolioDemo.variants.enhanced.title}: AI Can Modify Data`}
               description={`${portfolioDemo.variants.enhanced.description}. Watch the live data update above!`}
