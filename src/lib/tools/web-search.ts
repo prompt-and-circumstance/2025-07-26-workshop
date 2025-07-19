@@ -1,16 +1,16 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { TOOL_DESCRIPTIONS } from "../prompts/tool-descriptions";
+import { KNOWLEDGE_DEMO_TOOL_DESCRIPTIONS, KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS } from "../prompts/demo-knowledge";
 
 export const webSearchTool = tool({
-  description: TOOL_DESCRIPTIONS.webSearch.description,
+  description: KNOWLEDGE_DEMO_TOOL_DESCRIPTIONS["web-search"],
   parameters: z.object({
-    query: z.string().describe(TOOL_DESCRIPTIONS.webSearch.queryHint),
+    query: z.string().describe(KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS["web-search"].query),
     maxResults: z
       .number()
       .optional()
       .default(5)
-      .describe("Maximum number of results to return"),
+      .describe(KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS["web-search"].maxResults),
   }),
   execute: async ({ query, maxResults }) => {
     try {

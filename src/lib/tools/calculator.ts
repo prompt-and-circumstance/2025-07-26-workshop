@@ -1,13 +1,11 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { TOOL_DESCRIPTIONS } from "../prompts/tool-descriptions";
+import { MATH_DEMO_TOOL_DESCRIPTIONS, MATH_DEMO_PARAMETER_DESCRIPTIONS } from "../prompts/demo-math";
 
 export const calculatorTool = tool({
-  description: TOOL_DESCRIPTIONS.calculator.description,
+  description: MATH_DEMO_TOOL_DESCRIPTIONS.calculator,
   parameters: z.object({
-    expression: z
-      .string()
-      .describe(TOOL_DESCRIPTIONS.calculator.expressionHint),
+    expression: z.string().describe(MATH_DEMO_PARAMETER_DESCRIPTIONS.calculator.expression),
   }),
   execute: async ({ expression }) => {
     try {

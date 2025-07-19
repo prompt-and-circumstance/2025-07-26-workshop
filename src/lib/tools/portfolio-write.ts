@@ -1,14 +1,15 @@
 import { tool } from "ai";
 import { z } from "zod";
 import { addBackendInvestment, addBackendClientNote, addBackendTask, completeBackendTask } from "../portfolio-backend";
+import { PORTFOLIO_DEMO_TOOL_DESCRIPTIONS, PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS } from "../prompts/demo-portfolio";
 
 export const addInvestmentTool = tool({
-  description: "Add a new investment position to the portfolio",
+  description: PORTFOLIO_DEMO_TOOL_DESCRIPTIONS["add-investment"],
   parameters: z.object({
-    symbol: z.string().describe("Stock symbol (e.g. AAPL, MSFT)"),
-    shares: z.number().positive().describe("Number of shares to purchase"),
-    purchasePrice: z.number().positive().describe("Price per share at purchase"),
-    purchaseDate: z.string().describe("Purchase date in YYYY-MM-DD format")
+    symbol: z.string().describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["add-investment"].symbol),
+    shares: z.number().positive().describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["add-investment"].shares),
+    purchasePrice: z.number().positive().describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["add-investment"].purchasePrice),
+    purchaseDate: z.string().describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["add-investment"].purchaseDate)
   }),
   execute: async ({ symbol, shares, purchasePrice, purchaseDate }) => {
     try {
@@ -43,10 +44,10 @@ export const addInvestmentTool = tool({
 });
 
 export const addClientNoteTool = tool({
-  description: "Add a new note about a client meeting or interaction",
+  description: PORTFOLIO_DEMO_TOOL_DESCRIPTIONS["add-client-note"],
   parameters: z.object({
-    clientName: z.string().describe("Name of the client or company"),
-    content: z.string().describe("Content of the note or meeting summary")
+    clientName: z.string().describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["add-client-note"].clientName),
+    content: z.string().describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["add-client-note"].content)
   }),
   execute: async ({ clientName, content }) => {
     try {
@@ -74,10 +75,10 @@ export const addClientNoteTool = tool({
 });
 
 export const updateClientNoteTool = tool({
-  description: "Update an existing client note",
+  description: PORTFOLIO_DEMO_TOOL_DESCRIPTIONS["update-client-note"],
   parameters: z.object({
-    noteId: z.string().describe("ID of the note to update"),
-    content: z.string().describe("New content for the note")
+    noteId: z.string().describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["update-client-note"].noteId),
+    content: z.string().describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["update-client-note"].content)
   }),
   execute: async ({ noteId, content }) => {
     try {
@@ -98,10 +99,10 @@ export const updateClientNoteTool = tool({
 });
 
 export const createTaskTool = tool({
-  description: "Create a new task or action item",
+  description: PORTFOLIO_DEMO_TOOL_DESCRIPTIONS["create-task"],
   parameters: z.object({
-    description: z.string().describe("Description of the task to be completed"),
-    priority: z.enum(['low', 'medium', 'high']).default('medium').describe("Priority level of the task")
+    description: z.string().describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["create-task"].description),
+    priority: z.enum(['low', 'medium', 'high']).default('medium').describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["create-task"].priority)
   }),
   execute: async ({ description, priority }) => {
     try {
@@ -130,9 +131,9 @@ export const createTaskTool = tool({
 });
 
 export const completeTaskTool = tool({
-  description: "Mark a task as completed",
+  description: PORTFOLIO_DEMO_TOOL_DESCRIPTIONS["complete-task"],
   parameters: z.object({
-    taskId: z.string().describe("ID of the task to mark as completed")
+    taskId: z.string().describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["complete-task"].taskId)
   }),
   execute: async ({ taskId }) => {
     try {

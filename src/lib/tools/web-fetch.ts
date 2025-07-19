@@ -1,6 +1,7 @@
 import { tool } from "ai";
 import { z } from "zod";
 import * as cheerio from "cheerio";
+import { KNOWLEDGE_DEMO_TOOL_DESCRIPTIONS, KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS } from "../prompts/demo-knowledge";
 
 // Helper function to extract text from HTML using cheerio
 function extractTextFromHtml(html: string): string {
@@ -55,15 +56,17 @@ function extractTitleFromHtml(html: string): string {
 }
 
 export const webFetchTool = tool({
-  description:
-    "Fetch and extract text content from a web page URL. Use this after web-search to get detailed content from specific URLs.",
+  description: KNOWLEDGE_DEMO_TOOL_DESCRIPTIONS["web-fetch"],
   parameters: z.object({
-    url: z.string().url().describe("The URL of the web page to fetch"),
+    url: z
+      .string()
+      .url()
+      .describe(KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS["web-fetch"].url),
     maxLength: z
       .number()
       .optional()
       .default(5000)
-      .describe("Maximum number of characters to return from the page content"),
+      .describe(KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS["web-fetch"].maxLength),
   }),
   execute: async ({ url, maxLength }) => {
     try {
