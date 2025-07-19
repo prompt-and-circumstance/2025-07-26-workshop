@@ -1,6 +1,10 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { KNOWLEDGE_DEMO_TOOL_DESCRIPTIONS, KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS } from "../prompts/demo-knowledge";
+
+import {
+  KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS,
+  KNOWLEDGE_DEMO_TOOL_DESCRIPTIONS,
+} from "../prompts/demo-knowledge";
 
 // Mock proprietary client database
 const clientDatabase = {
@@ -76,11 +80,15 @@ export const clientLookupTool = tool({
   parameters: z.object({
     clientName: z
       .string()
-      .describe(KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS["client-lookup"].clientName),
+      .describe(
+        KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS["client-lookup"].clientName,
+      ),
     infoType: z
       .enum(["overview", "contact", "strategy", "activity", "compliance"])
       .optional()
-      .describe(KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS["client-lookup"].infoType),
+      .describe(
+        KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS["client-lookup"].infoType,
+      ),
   }),
   execute: async ({ clientName, infoType = "overview" }) => {
     // Simulate database lookup
@@ -91,7 +99,7 @@ export const clientLookupTool = tool({
       const suggestions = Object.keys(clientDatabase).filter(
         (name) =>
           name.toLowerCase().includes(clientName.toLowerCase()) ||
-          clientName.toLowerCase().includes(name.toLowerCase())
+          clientName.toLowerCase().includes(name.toLowerCase()),
       );
 
       return {

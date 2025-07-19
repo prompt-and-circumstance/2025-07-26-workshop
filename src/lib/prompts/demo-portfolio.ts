@@ -1,16 +1,17 @@
 /**
  * 💼 PORTFOLIO DEMO PROMPTS & TOOLS
- * 
+ *
  * This file contains ALL prompts and tool configurations for the Portfolio demonstration.
  * Students can modify these prompts to change how the AI behaves in the portfolio demo.
- * 
+ *
  * 📝 DEMO PURPOSE: Compare read-only vs. read-write AI capabilities for portfolio management
- * 
+ *
  * 🚨 WHAT TO MODIFY: Edit the text between backticks (`) to change AI behavior
  * 🚨 DON'T CHANGE: The structure with { } brackets and "quotes"
  */
 
 import dedent from "dedent";
+
 import type { ToolName } from "../tools/index";
 
 export const PORTFOLIO_DEMO_PROMPTS = {
@@ -64,7 +65,7 @@ export const PORTFOLIO_DEMO_TOOLS: Record<string, ToolName[]> = {
   "portfolio-read": ["view-portfolio", "get-client-notes", "list-tasks"],
   "portfolio-write": [
     "view-portfolio",
-    "get-client-notes", 
+    "get-client-notes",
     "list-tasks",
     "add-investment",
     "add-client-note",
@@ -84,7 +85,7 @@ export const PORTFOLIO_DEMO_SUGGESTIONS = [
 
 /**
  * 🔧 PORTFOLIO DEMO TOOL DESCRIPTIONS
- * 
+ *
  * These descriptions control how the AI understands and uses portfolio management tools.
  * Students can modify these to change how the AI approaches portfolio operations.
  */
@@ -94,7 +95,8 @@ export const PORTFOLIO_DEMO_TOOL_DESCRIPTIONS = {
   "list-tasks": "List all tasks and action items for portfolio management",
   "add-investment": "Add a new investment position to the portfolio",
   "add-client-note": "Add a new note about a client meeting or interaction",
-  "update-client-note": "Update an existing client note with additional information",
+  "update-client-note":
+    "Update an existing client note with additional information",
   "create-task": "Create a new task or action item for portfolio management",
   "complete-task": "Mark a task as completed",
 };

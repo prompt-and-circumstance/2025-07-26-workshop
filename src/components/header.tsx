@@ -1,6 +1,7 @@
+import { Link } from "@tanstack/react-router";
+
 import { DateDisplay } from "@/components/date-display";
 
-import { Link } from "@tanstack/react-router";
 export function Header() {
   return (
     <header className="border-b border-border bg-card">

@@ -1,11 +1,19 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useQuery, useMutation } from "@tanstack/react-query";
 import { AssistantRuntimeProvider } from "@assistant-ui/react";
 import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
-import { WorkshopThread } from "@/components/assistant-ui/workshop-thread";
-import { WorkshopLayout } from "@/components/workshop-layout";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { z } from "zod";
+
+import { getDemoConfig } from "@/lib/demos/configs";
+import { getAllWorkshopDemos } from "@/lib/demos/workshop-demos";
+import {
+  type ClientNote,
+  type Investment,
+  type PortfolioState,
+  type Task,
+} from "@/lib/portfolio-state";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import {
   Card,
   CardContent,
@@ -13,16 +21,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { getAllWorkshopDemos } from "@/lib/demos/workshop-demos";
-import { getDemoConfig } from "@/lib/demos/configs";
-import {
-  type Investment,
-  type ClientNote,
-  type Task,
-  type PortfolioState,
-} from "@/lib/portfolio-state";
-import { z } from "zod";
+import { Switch } from "@/components/ui/switch";
+import { WorkshopThread } from "@/components/assistant-ui/workshop-thread";
+import { WorkshopLayout } from "@/components/workshop-layout";
 
 const portfolioSearchSchema = z.object({
   writeEnabled: z.coerce.boolean().optional(),
@@ -35,7 +36,7 @@ export const Route = createFileRoute("/demo-portfolio")({
 
 function DemoPortfolio() {
   const portfolioDemo = getAllWorkshopDemos().find(
-    (demo) => demo.id === "portfolio"
+    (demo) => demo.id === "portfolio",
   );
   const basicConfig = getDemoConfig("portfolio-read");
   const enhancedConfig = getDemoConfig("portfolio-write");
@@ -124,12 +125,14 @@ function DemoPortfolio() {
             <div className="flex items-center space-x-3">
               <Switch
                 checked={writeEnabled}
-                onCheckedChange={(checked) => 
+                onCheckedChange={(checked) =>
                   navigate({ search: { writeEnabled: checked } })
                 }
               />
               <span className="text-sm font-medium w-20 text-left">
-                {writeEnabled ? portfolioDemo.variants.enhanced.title : portfolioDemo.variants.basic.title}
+                {writeEnabled
+                  ? portfolioDemo.variants.enhanced.title
+                  : portfolioDemo.variants.basic.title}
               </span>
             </div>
           </div>
@@ -183,7 +186,7 @@ function DemoPortfolio() {
                             </div>
                             <div
                               className={`text-sm ${getGainLossColor(
-                                gainLoss
+                                gainLoss,
                               )}`}
                             >
                               {gainLoss >= 0 ? "+" : ""}
@@ -192,7 +195,7 @@ function DemoPortfolio() {
                           </div>
                         </div>
                       );
-                    }
+                    },
                   )
                 )}
               </div>
@@ -268,8 +271,8 @@ function DemoPortfolio() {
                               task.priority === "high"
                                 ? "success"
                                 : task.priority === "medium"
-                                ? "warning"
-                                : "info"
+                                  ? "warning"
+                                  : "info"
                             }
                           >
                             {task.priority}

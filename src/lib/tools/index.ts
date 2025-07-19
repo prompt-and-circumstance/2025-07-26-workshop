@@ -1,38 +1,38 @@
 import { calculatorTool } from "./calculator";
-import { webSearchTool } from "./web-search";
 import { clientLookupTool } from "./client-lookup";
 import {
-  viewPortfolioTool,
+  analyzeStock,
+  calculateExchange,
+  checkPrice,
+  convertCurrency,
+  convertCurrencyPoor,
+  currencyCalculator,
+  exchangeRateHistory,
+  fetchStockData,
+  forexConvert,
+  formatCurrency,
+  getCurrencyRate,
+  getMarketData,
+  getQuote,
+  getStockPrice,
+  getStockPricePoor,
+  lookupStock,
+  performExchange,
+} from "./currency";
+import {
   getClientNotesTool,
   listTasksTool,
+  viewPortfolioTool,
 } from "./portfolio-read";
 import {
-  addInvestmentTool,
   addClientNoteTool,
-  updateClientNoteTool,
-  createTaskTool,
+  addInvestmentTool,
   completeTaskTool,
+  createTaskTool,
+  updateClientNoteTool,
 } from "./portfolio-write";
 import { webFetchTool } from "./web-fetch";
-import {
-  getStockPrice,
-  convertCurrency,
-  getCurrencyRate,
-  calculateExchange,
-  fetchStockData,
-  lookupStock,
-  exchangeRateHistory,
-  formatCurrency,
-  getQuote,
-  currencyCalculator,
-  getMarketData,
-  performExchange,
-  checkPrice,
-  forexConvert,
-  analyzeStock,
-  getStockPricePoor,
-  convertCurrencyPoor,
-} from "./currency";
+import { webSearchTool } from "./web-search";
 
 export const TOOL_REGISTRY = {
   // Original tools
@@ -80,7 +80,7 @@ export function getWorkshopTools(toolNames: ToolName[]) {
       tools[toolName] = tool;
     } else {
       console.warn(
-        `Tool '${toolName}' not found in registry or not implemented yet`
+        `Tool '${toolName}' not found in registry or not implemented yet`,
       );
     }
   }

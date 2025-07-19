@@ -1,16 +1,17 @@
 /**
  * 🔍 KNOWLEDGE DEMO PROMPTS & TOOLS
- * 
+ *
  * This file contains ALL prompts and tool configurations for the Knowledge demonstration.
  * Students can modify these prompts to change how the AI behaves in the knowledge demo.
- * 
+ *
  * 📝 DEMO PURPOSE: Compare LLM knowledge limitations vs. tool-enhanced information access
- * 
+ *
  * 🚨 WHAT TO MODIFY: Edit the text between backticks (`) to change AI behavior
  * 🚨 DON'T CHANGE: The structure with { } brackets and "quotes"
  */
 
 import dedent from "dedent";
+
 import type { ToolName } from "../tools/index";
 
 export const KNOWLEDGE_DEMO_PROMPTS = {
@@ -47,11 +48,11 @@ export const KNOWLEDGE_DEMO_PROMPTS = {
     CURRENT DATE: ${
       new Date().toISOString().split("T")[0]
     } (${new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })})
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })})
 
     Your goal is to showcase how external data access transforms AI effectiveness by providing access to recent information and proprietary data.
 
@@ -91,7 +92,7 @@ export const KNOWLEDGE_DEMO_SUGGESTIONS = [
 
 /**
  * 🔧 KNOWLEDGE DEMO TOOL DESCRIPTIONS
- * 
+ *
  * These descriptions control how the AI understands and uses web search and client lookup tools.
  * Students can modify these to change how the AI approaches information gathering.
  */

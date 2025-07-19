@@ -1,6 +1,13 @@
-import { useState, useMemo } from "react";
 import { encode as o200k_encode } from "gpt-tokenizer/encoding/o200k_base";
 import { encode as p50k_encode } from "gpt-tokenizer/encoding/p50k_base";
+import { useMemo, useState } from "react";
+
+import {
+  sampleTextOrder,
+  sampleTexts,
+  type SampleTextType,
+} from "@/data/sample-texts";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,13 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  sampleTexts,
-  sampleTextOrder,
-  type SampleTextType,
-} from "@/data/sample-texts";
 
 const tokenizers = {
   o200k_base: {
@@ -83,7 +84,7 @@ export function TokenizerComparison() {
   };
 
   const tokenDifference = Math.abs(
-    results[0].tokens.length - results[1].tokens.length
+    results[0].tokens.length - results[1].tokens.length,
   );
   const efficiency =
     results[0].tokens.length < results[1].tokens.length
@@ -162,7 +163,7 @@ export function TokenizerComparison() {
                     (tokenDifference /
                       Math.max(
                         results[0].tokens.length,
-                        results[1].tokens.length
+                        results[1].tokens.length,
                       )) *
                     100
                   ).toFixed(1)}

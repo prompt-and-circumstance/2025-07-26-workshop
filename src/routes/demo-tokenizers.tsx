@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { WorkshopLayout } from "@/components/workshop-layout";
+
 import { getAllWorkshopDemos } from "@/lib/demos/workshop-demos";
-import { TokenizerDemo } from "@/components/tokenizer-demo";
-import { TokenizerComparison } from "@/components/tokenizer-comparison";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { TokenizerComparison } from "@/components/tokenizer-comparison";
+import { TokenizerDemo } from "@/components/tokenizer-demo";
+import { WorkshopLayout } from "@/components/workshop-layout";
 
 export const Route = createFileRoute("/demo-tokenizers")({
   component: TokenizerDemoPage,
@@ -11,7 +12,7 @@ export const Route = createFileRoute("/demo-tokenizers")({
 
 function TokenizerDemoPage() {
   const tokenizerDemo = getAllWorkshopDemos().find(
-    (demo) => demo.id === "tokenizers"
+    (demo) => demo.id === "tokenizers",
   );
 
   if (!tokenizerDemo) {

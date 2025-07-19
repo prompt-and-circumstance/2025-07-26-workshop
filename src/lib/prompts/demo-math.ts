@@ -1,16 +1,17 @@
 /**
  * 🧮 MATH DEMO PROMPTS & TOOLS
- * 
+ *
  * This file contains ALL prompts and tool configurations for the Math demonstration.
  * Students can modify these prompts to change how the AI behaves in the math demo.
- * 
+ *
  * 📝 DEMO PURPOSE: Compare LLM mathematical capabilities with and without calculator tools
- * 
+ *
  * 🚨 WHAT TO MODIFY: Edit the text between backticks (`) to change AI behavior
  * 🚨 DON'T CHANGE: The structure with { } brackets and "quotes"
  */
 
 import dedent from "dedent";
+
 import type { ToolName } from "../tools/index";
 
 export const MATH_DEMO_PROMPTS = {
@@ -74,7 +75,7 @@ export const MATH_DEMO_SUGGESTIONS = [
 
 /**
  * 🔧 MATH DEMO TOOL DESCRIPTIONS
- * 
+ *
  * These descriptions control how the AI understands and uses the calculator tool.
  * Students can modify these to change how the AI approaches mathematical problems.
  */
@@ -91,6 +92,7 @@ export const MATH_DEMO_TOOL_DESCRIPTIONS = {
 
 export const MATH_DEMO_PARAMETER_DESCRIPTIONS = {
   calculator: {
-    expression: "JavaScript arithmetic expression using numbers, operators (+, -, *, /), parentheses, and Math functions",
+    expression:
+      "JavaScript arithmetic expression using numbers, operators (+, -, *, /), parentheses, and Math functions",
   },
 };

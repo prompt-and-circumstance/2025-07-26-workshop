@@ -1,11 +1,17 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { KNOWLEDGE_DEMO_TOOL_DESCRIPTIONS, KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS } from "../prompts/demo-knowledge";
+
+import {
+  KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS,
+  KNOWLEDGE_DEMO_TOOL_DESCRIPTIONS,
+} from "../prompts/demo-knowledge";
 
 export const webSearchTool = tool({
   description: KNOWLEDGE_DEMO_TOOL_DESCRIPTIONS["web-search"],
   parameters: z.object({
-    query: z.string().describe(KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS["web-search"].query),
+    query: z
+      .string()
+      .describe(KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS["web-search"].query),
     maxResults: z
       .number()
       .optional()
@@ -41,7 +47,7 @@ export const webSearchTool = tool({
 
       if (!response.ok) {
         throw new Error(
-          `Brave Search API responded with status ${response.status}`
+          `Brave Search API responded with status ${response.status}`,
         );
       }
 

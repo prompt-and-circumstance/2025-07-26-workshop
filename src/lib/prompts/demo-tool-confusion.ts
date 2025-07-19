@@ -1,16 +1,17 @@
 /**
  * 🔧 TOOL CONFUSION DEMO PROMPTS & TOOLS
- * 
+ *
  * This file contains ALL prompts and tool configurations for the Tool Confusion demonstration.
  * Students can modify these prompts to change how the AI behaves in the tool confusion demo.
- * 
+ *
  * 📝 DEMO PURPOSE: Compare focused tool selection vs. overwhelming tool overload
- * 
+ *
  * 🚨 WHAT TO MODIFY: Edit the text between backticks (`) to change AI behavior
  * 🚨 DON'T CHANGE: The structure with { } brackets and "quotes"
  */
 
 import dedent from "dedent";
+
 import type { ToolName } from "../tools/index";
 
 export const TOOL_CONFUSION_DEMO_PROMPTS = {
@@ -109,7 +110,7 @@ export const TOOL_CONFUSION_DEMO_SUGGESTIONS = [
 
 /**
  * 🔧 TOOL CONFUSION DEMO TOOL DESCRIPTIONS
- * 
+ *
  * These descriptions control how the AI understands the different tool sets.
  * Students can modify these to experiment with tool naming and confusion effects.
  */
@@ -117,14 +118,18 @@ export const TOOL_CONFUSION_DEMO_TOOL_DESCRIPTIONS = {
   // FOCUSED TOOLS - Clear, direct descriptions
   "get-stock-price": "Retrieve current market price for stocks",
   "convert-currency": "Convert between different currencies",
-  
+
   // OVERLOAD TOOLS - Confusing names that don't match their function
-  "portfolio-risk-assessment": "Comprehensive portfolio risk analysis and regulatory compliance validation for investment decision-making",
-  "tax-liability-calculator": "Calculate tax implications and jurisdictional liability for cross-border financial transactions",
-  
+  "portfolio-risk-assessment":
+    "Comprehensive portfolio risk analysis and regulatory compliance validation for investment decision-making",
+  "tax-liability-calculator":
+    "Calculate tax implications and jurisdictional liability for cross-border financial transactions",
+
   // CONFUSING SIMILAR TOOLS - Don't actually do what's needed
-  "get-currency-rate": "Retrieve current exchange rate between currencies (rate only, no conversion)",
-  "calculate-exchange": "Perform currency calculations with user-provided exchange rate",
+  "get-currency-rate":
+    "Retrieve current exchange rate between currencies (rate only, no conversion)",
+  "calculate-exchange":
+    "Perform currency calculations with user-provided exchange rate",
   "fetch-stock-data": "Retrieve historical stock data and trading volumes",
   "lookup-stock": "Get company information and business details",
   "exchange-rate-history": "Retrieve historical exchange rate data",

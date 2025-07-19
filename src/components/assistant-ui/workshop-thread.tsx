@@ -5,8 +5,6 @@ import {
   MessagePrimitive,
   ThreadPrimitive,
 } from "@assistant-ui/react";
-import type { FC } from "react";
-import { useRef, useLayoutEffect, useState } from "react";
 import {
   ArrowDownIcon,
   CheckIcon,
@@ -17,8 +15,10 @@ import {
   RefreshCwIcon,
   SendHorizontalIcon,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import type { FC } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   HoverCard,
@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/hover-card";
 import { MarkdownText } from "@/components/assistant-ui/markdown-text";
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button";
+
 import { ToolFallback } from "./tool-fallback";
 
 interface Suggestion {
@@ -319,7 +320,7 @@ const BranchPicker: FC<BranchPickerPrimitive.Root.Props> = ({
       hideWhenSingleBranch
       className={cn(
         "text-muted-foreground inline-flex items-center text-xs",
-        className
+        className,
       )}
       {...rest}
     >

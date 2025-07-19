@@ -1,20 +1,27 @@
-import { useState, useMemo } from "react";
 import {
-  encode as cl100k_encode,
   decode as cl100k_decode,
+  encode as cl100k_encode,
 } from "gpt-tokenizer/encoding/cl100k_base";
 import {
-  encode as o200k_encode,
   decode as o200k_decode,
+  encode as o200k_encode,
 } from "gpt-tokenizer/encoding/o200k_base";
 import {
-  encode as p50k_encode,
   decode as p50k_decode,
+  encode as p50k_encode,
 } from "gpt-tokenizer/encoding/p50k_base";
 import {
-  encode as r50k_encode,
   decode as r50k_decode,
+  encode as r50k_encode,
 } from "gpt-tokenizer/encoding/r50k_base";
+import { useMemo, useState } from "react";
+
+import {
+  sampleTextOrder,
+  sampleTexts,
+  type SampleTextType,
+} from "@/data/sample-texts";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -22,8 +29,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -31,11 +36,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  sampleTexts,
-  sampleTextOrder,
-  type SampleTextType,
-} from "@/data/sample-texts";
+import { Textarea } from "@/components/ui/textarea";
 
 const tokenizers = {
   o200k_base: {
@@ -127,7 +128,7 @@ export function TokenizerDemo() {
   const tokenizer = tokenizers[selectedTokenizer];
   const encodedTokens = useMemo(
     () => tokenizer.encode(inputText),
-    [inputText, tokenizer]
+    [inputText, tokenizer],
   );
 
   const handleSampleSelect = (sample: SampleTextType) => {

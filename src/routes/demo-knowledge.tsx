@@ -1,10 +1,11 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AssistantRuntimeProvider } from "@assistant-ui/react";
 import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
-import { WorkshopThread } from "@/components/assistant-ui/workshop-thread";
-import { WorkshopLayout } from "@/components/workshop-layout";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { z } from "zod";
+
+import { getDemoConfig } from "@/lib/demos/configs";
+import { getAllWorkshopDemos } from "@/lib/demos/workshop-demos";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import {
   Card,
   CardContent,
@@ -12,9 +13,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getAllWorkshopDemos } from "@/lib/demos/workshop-demos";
-import { getDemoConfig } from "@/lib/demos/configs";
-import { z } from "zod";
+import { Switch } from "@/components/ui/switch";
+import { WorkshopThread } from "@/components/assistant-ui/workshop-thread";
+import { WorkshopLayout } from "@/components/workshop-layout";
 
 const knowledgeSearchSchema = z.object({
   toolsEnabled: z.coerce.boolean().optional(),
@@ -27,7 +28,7 @@ export const Route = createFileRoute("/demo-knowledge")({
 
 function DemoKnowledge() {
   const knowledgeDemo = getAllWorkshopDemos().find(
-    (demo) => demo.id === "knowledge"
+    (demo) => demo.id === "knowledge",
   );
   const basicConfig = getDemoConfig("knowledge-basic");
   const enhancedConfig = getDemoConfig("knowledge-enhanced");
@@ -73,12 +74,14 @@ function DemoKnowledge() {
             <div className="flex items-center space-x-3">
               <Switch
                 checked={toolsEnabled}
-                onCheckedChange={(checked) => 
+                onCheckedChange={(checked) =>
                   navigate({ search: { toolsEnabled: checked } })
                 }
               />
               <span className="text-sm font-medium w-28 text-left">
-                {toolsEnabled ? knowledgeDemo.variants.enhanced.title : knowledgeDemo.variants.basic.title}
+                {toolsEnabled
+                  ? knowledgeDemo.variants.enhanced.title
+                  : knowledgeDemo.variants.basic.title}
               </span>
             </div>
           </div>

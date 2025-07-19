@@ -1,8 +1,24 @@
+import {
+  KNOWLEDGE_DEMO_PROMPTS,
+  KNOWLEDGE_DEMO_SUGGESTIONS,
+  KNOWLEDGE_DEMO_TOOLS,
+} from "../prompts/demo-knowledge";
+import {
+  MATH_DEMO_PROMPTS,
+  MATH_DEMO_SUGGESTIONS,
+  MATH_DEMO_TOOLS,
+} from "../prompts/demo-math";
+import {
+  PORTFOLIO_DEMO_PROMPTS,
+  PORTFOLIO_DEMO_SUGGESTIONS,
+  PORTFOLIO_DEMO_TOOLS,
+} from "../prompts/demo-portfolio";
+import {
+  TOOL_CONFUSION_DEMO_PROMPTS,
+  TOOL_CONFUSION_DEMO_SUGGESTIONS,
+  TOOL_CONFUSION_DEMO_TOOLS,
+} from "../prompts/demo-tool-confusion";
 import type { DemoConfig } from "./types";
-import { MATH_DEMO_PROMPTS, MATH_DEMO_TOOLS, MATH_DEMO_SUGGESTIONS } from "../prompts/demo-math";
-import { KNOWLEDGE_DEMO_PROMPTS, KNOWLEDGE_DEMO_TOOLS, KNOWLEDGE_DEMO_SUGGESTIONS } from "../prompts/demo-knowledge";
-import { PORTFOLIO_DEMO_PROMPTS, PORTFOLIO_DEMO_TOOLS, PORTFOLIO_DEMO_SUGGESTIONS } from "../prompts/demo-portfolio";
-import { TOOL_CONFUSION_DEMO_PROMPTS, TOOL_CONFUSION_DEMO_TOOLS, TOOL_CONFUSION_DEMO_SUGGESTIONS } from "../prompts/demo-tool-confusion";
 
 export const DEMO_CONFIGS: Record<string, DemoConfig> = {
   "math-basic": {

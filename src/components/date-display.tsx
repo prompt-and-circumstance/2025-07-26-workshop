@@ -14,7 +14,7 @@ function getCurrentDateTime() {
 
 export function DateDisplay() {
   const [currentDateTime, setCurrentDateTime] = useState(() =>
-    getCurrentDateTime()
+    getCurrentDateTime(),
   );
 
   useEffect(() => {
@@ -26,7 +26,10 @@ export function DateDisplay() {
   }, []);
 
   return (
-    <div className="terminal-text text-sm font-extrabold bloomberg-amber" suppressHydrationWarning>
+    <div
+      className="terminal-text text-sm font-extrabold bloomberg-amber"
+      suppressHydrationWarning
+    >
       {currentDateTime}
     </div>
   );

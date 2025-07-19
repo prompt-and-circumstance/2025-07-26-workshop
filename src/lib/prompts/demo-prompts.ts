@@ -97,11 +97,11 @@ export const DEMO_PROMPTS = {
     CURRENT DATE: ${
       new Date().toISOString().split("T")[0]
     } (${new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  })})
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })})
 
     Your goal is to showcase how external data access transforms AI effectiveness by providing access to recent information and proprietary data.
 

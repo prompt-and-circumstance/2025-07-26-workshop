@@ -1,5 +1,5 @@
-import type { ToolName } from "../tools/index";
 import type { ModelName } from "../models";
+import type { ToolName } from "../tools/index";
 
 export interface DemoConfig {
   id: string;

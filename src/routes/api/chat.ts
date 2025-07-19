@@ -1,8 +1,9 @@
 import { createServerFileRoute } from "@tanstack/react-start/server";
 import { streamText } from "ai";
+
 import { getDemoConfig } from "@/lib/demos/configs";
-import { getWorkshopTools } from "@/lib/tools";
 import { getModel } from "@/lib/models";
+import { getWorkshopTools } from "@/lib/tools";
 
 export const ServerRoute = createServerFileRoute("/api/chat").methods({
   POST: async ({ request }) => {

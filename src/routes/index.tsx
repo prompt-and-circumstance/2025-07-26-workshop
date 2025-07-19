@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { WorkshopLayout } from "@/components/workshop-layout";
-import { HeroSection } from "@/components/hero-section";
-import { DemoCard } from "@/components/demo-card";
+
 import { demoCards } from "@/data/demo-cards";
+import { DemoCard } from "@/components/demo-card";
+import { HeroSection } from "@/components/hero-section";
+import { WorkshopLayout } from "@/components/workshop-layout";
 
 export const Route = createFileRoute("/")({
   component: Home,

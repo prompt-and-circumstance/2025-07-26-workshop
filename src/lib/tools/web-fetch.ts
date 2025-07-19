@@ -1,7 +1,11 @@
 import { tool } from "ai";
-import { z } from "zod";
 import * as cheerio from "cheerio";
-import { KNOWLEDGE_DEMO_TOOL_DESCRIPTIONS, KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS } from "../prompts/demo-knowledge";
+import { z } from "zod";
+
+import {
+  KNOWLEDGE_DEMO_PARAMETER_DESCRIPTIONS,
+  KNOWLEDGE_DEMO_TOOL_DESCRIPTIONS,
+} from "../prompts/demo-knowledge";
 
 // Helper function to extract text from HTML using cheerio
 function extractTextFromHtml(html: string): string {
@@ -9,7 +13,7 @@ function extractTextFromHtml(html: string): string {
 
   // Remove unwanted elements
   $(
-    "script, style, nav, footer, aside, .advertisement, .ads, .sidebar"
+    "script, style, nav, footer, aside, .advertisement, .ads, .sidebar",
   ).remove();
 
   // Focus on main content

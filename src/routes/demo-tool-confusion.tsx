@@ -1,11 +1,12 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useMutation } from "@tanstack/react-query";
 import { AssistantRuntimeProvider } from "@assistant-ui/react";
 import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
-import { WorkshopThread } from "@/components/assistant-ui/workshop-thread";
-import { WorkshopLayout } from "@/components/workshop-layout";
+import { useMutation } from "@tanstack/react-query";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { z } from "zod";
+
+import { getDemoConfig } from "@/lib/demos/configs";
+import { getAllWorkshopDemos } from "@/lib/demos/workshop-demos";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import {
   Card,
   CardContent,
@@ -13,9 +14,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getAllWorkshopDemos } from "@/lib/demos/workshop-demos";
-import { getDemoConfig } from "@/lib/demos/configs";
-import { z } from "zod";
+import { Switch } from "@/components/ui/switch";
+import { WorkshopThread } from "@/components/assistant-ui/workshop-thread";
+import { WorkshopLayout } from "@/components/workshop-layout";
 
 const toolsSearchSchema = z.object({
   overloadEnabled: z.coerce.boolean().optional(),
@@ -28,7 +29,7 @@ export const Route = createFileRoute("/demo-tool-confusion")({
 
 function DemoTools() {
   const toolsDemo = getAllWorkshopDemos().find(
-    (demo) => demo.id === "tool-confusion"
+    (demo) => demo.id === "tool-confusion",
   );
   const focusedConfig = getDemoConfig("tools-focused");
   const overloadConfig = getDemoConfig("tools-overload");

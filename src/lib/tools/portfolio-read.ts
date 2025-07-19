@@ -1,7 +1,11 @@
 import { tool } from "ai";
 import { z } from "zod";
+
 import { getBackendPortfolioState } from "../portfolio-backend";
-import { PORTFOLIO_DEMO_TOOL_DESCRIPTIONS, PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS } from "../prompts/demo-portfolio";
+import {
+  PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS,
+  PORTFOLIO_DEMO_TOOL_DESCRIPTIONS,
+} from "../prompts/demo-portfolio";
 
 export const viewPortfolioTool = tool({
   description: PORTFOLIO_DEMO_TOOL_DESCRIPTIONS["view-portfolio"],
@@ -17,7 +21,7 @@ export const viewPortfolioTool = tool({
 
     if (symbol) {
       investments = investments.filter(
-        (inv) => inv.symbol.toLowerCase() === symbol.toLowerCase()
+        (inv) => inv.symbol.toLowerCase() === symbol.toLowerCase(),
       );
     }
 
@@ -33,12 +37,12 @@ export const viewPortfolioTool = tool({
 
     const totalValue = investments.reduce(
       (sum, inv) => sum + inv.shares * (inv.currentPrice || inv.purchasePrice),
-      0
+      0,
     );
 
     const totalCost = investments.reduce(
       (sum, inv) => sum + inv.shares * inv.purchasePrice,
-      0
+      0,
     );
 
     const totalGainLoss = totalValue - totalCost;
@@ -79,7 +83,9 @@ export const getClientNotesTool = tool({
     clientName: z
       .string()
       .optional()
-      .describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["get-client-notes"].clientName),
+      .describe(
+        PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["get-client-notes"].clientName,
+      ),
   }),
   execute: async ({ clientName }) => {
     const state = getBackendPortfolioState();
@@ -87,7 +93,7 @@ export const getClientNotesTool = tool({
 
     if (clientName) {
       notes = notes.filter((note) =>
-        note.clientName.toLowerCase().includes(clientName.toLowerCase())
+        note.clientName.toLowerCase().includes(clientName.toLowerCase()),
       );
     }
 
@@ -123,7 +129,9 @@ export const listTasksTool = tool({
       .boolean()
       .optional()
       .default(false)
-      .describe(PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["list-tasks"].showCompleted),
+      .describe(
+        PORTFOLIO_DEMO_PARAMETER_DESCRIPTIONS["list-tasks"].showCompleted,
+      ),
     priority: z
       .enum(["low", "medium", "high"])
       .optional()
